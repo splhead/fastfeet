@@ -3,19 +3,15 @@ import { addMonths, parseISO, isPast, areIntervalsOverlapping } from 'date-fns';
 
 import { Op } from 'sequelize';
 
-import Registration from '../models/Registration';
-import Student from '../models/Student';
-import Plan from '../models/Plan';
+import Delivery from '../models/Delivery';
 
-import RegistrationMail from '../jobs/RegistrationMail';
+/* import DeliveryMail from '../jobs/DeliveryMail'; */
 import Queue from '../../lib/Queue';
 
-class RegistrationController {
+class DeliveryController {
   async index(req, res) {
-    const registrations = await Registration.findAll({
-      order: ['student_id', 'start_date'],
-    });
-    return res.json(registrations);
+    const deliveries = await Delivery.findAll();
+    return res.json(deliveries);
   }
 
   async store(req, res) {
@@ -31,9 +27,9 @@ class RegistrationController {
 
     const { student_id, plan_id, start_date } = req.body;
 
-    const startOfRegistration = parseISO(start_date);
+    const startOfDelivery = parseISO(start_date);
 
-    if (isPast(startOfRegistration)) {
+    if (isPast(startOfDelivery)) {
       return res
         .status(400)
         .json({ error: 'You can not register in a past date' });
@@ -51,11 +47,11 @@ class RegistrationController {
       return res.status(400).json({ error: 'Plan does not exists!' });
     }
 
-    const endOfRegistration = addMonths(startOfRegistration, plan.duration);
+    const endOfDelivery = addMonths(startOfDelivery, plan.duration);
 
     const today = new Date();
 
-    const savedRegistrations = await Registration.findAll({
+    const savedDeliverys = await Delivery.findAll({
       where: {
         student_id,
         end_date: {
@@ -64,11 +60,11 @@ class RegistrationController {
       },
     });
 
-    if (savedRegistrations.length > 0) {
-      const alreadyRegistred = savedRegistrations.some(registration => {
+    if (savedDeliverys.length > 0) {
+      const alreadyRegistred = savedDeliverys.some(registration => {
         return areIntervalsOverlapping(
           { start: registration.start_date, end: registration.end_date },
-          { start: startOfRegistration, end: endOfRegistration }
+          { start: startOfDelivery, end: endOfDelivery }
         );
       });
 
@@ -79,15 +75,15 @@ class RegistrationController {
       }
     }
 
-    const registration = await Registration.create({
+    const registration = await Delivery.create({
       student_id,
       plan_id,
       start_date,
-      end_date: endOfRegistration,
+      end_date: endOfDelivery,
       price: plan.price * plan.duration,
     });
 
-    Queue.add(RegistrationMail.key, {
+    Queue.add(DeliveryMail.key, {
       student,
       plan,
       registration,
@@ -97,10 +93,10 @@ class RegistrationController {
   }
 
   async update(req, res) {
-    const registration = await Registration.findByPk(req.params.registrationId);
+    const registration = await Delivery.findByPk(req.params.registrationId);
 
     if (!registration) {
-      return res.status(401).json({ error: 'Registration does not exists!' });
+      return res.status(401).json({ error: 'Delivery does not exists!' });
     }
 
     const schema = Yup.object().shape({
@@ -115,9 +111,9 @@ class RegistrationController {
 
     const { student_id, plan_id, start_date } = req.body;
 
-    const startOfRegistration = parseISO(start_date);
+    const startOfDelivery = parseISO(start_date);
 
-    if (isPast(startOfRegistration)) {
+    if (isPast(startOfDelivery)) {
       return res
         .status(400)
         .json({ error: 'You can not register in a past date' });
@@ -135,11 +131,11 @@ class RegistrationController {
       return res.status(400).json({ error: 'Plan does not exists!' });
     }
 
-    const endOfRegistration = addMonths(startOfRegistration, plan.duration);
+    const endOfDelivery = addMonths(startOfDelivery, plan.duration);
 
     const today = new Date();
 
-    const savedRegistrations = await Registration.findAll({
+    const savedDeliverys = await Delivery.findAll({
       where: {
         student_id,
         end_date: {
@@ -148,11 +144,11 @@ class RegistrationController {
       },
     });
 
-    if (savedRegistrations.length > 0) {
-      const alreadyRegistred = savedRegistrations.some(registration => {
+    if (savedDeliverys.length > 0) {
+      const alreadyRegistred = savedDeliverys.some(registration => {
         return areIntervalsOverlapping(
           { start: registration.start_date, end: registration.end_date },
-          { start: startOfRegistration, end: endOfRegistration }
+          { start: startOfDelivery, end: endOfDelivery }
         );
       });
 
@@ -167,7 +163,7 @@ class RegistrationController {
       student_id,
       plan_id,
       start_date,
-      end_date: endOfRegistration,
+      end_date: endOfDelivery,
       price: plan.price * plan.duration,
     });
 
@@ -175,10 +171,10 @@ class RegistrationController {
   }
 
   async delete(req, res) {
-    const registration = await Registration.findByPk(req.params.registrationId);
+    const registration = await Delivery.findByPk(req.params.registrationId);
 
     if (!registration) {
-      return res.status(401).json({ error: 'Registration does not exists!' });
+      return res.status(401).json({ error: 'Delivery does not exists!' });
     }
 
     await registration.destroy();
@@ -187,4 +183,4 @@ class RegistrationController {
   }
 }
 
-export default new RegistrationController();
+export default new DeliveryController();

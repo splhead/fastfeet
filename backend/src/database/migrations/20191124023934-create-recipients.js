@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('students', {
+    return queryInterface.createTable('recipients', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -11,21 +11,33 @@ module.exports = {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
-      email: {
+      street: {
         type: Sequelize.STRING(50),
         allowNull: false,
         unique: true,
       },
-      age: {
-        type: Sequelize.INTEGER(3),
+      number: {
+        type: Sequelize.STRING(5),
         allowNull: false,
       },
-      weight: {
-        type: Sequelize.FLOAT,
+      complement: {
+        type: Sequelize.STRING(100),
+        allowNull: true,
+      },
+      district: {
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
-      height: {
-        type: Sequelize.FLOAT,
+      state: {
+        type: Sequelize.STRING(20),
+        allowNull: false,
+      },
+      city: {
+        type: Sequelize.STRING(30),
+        allowNull: false,
+      },
+      zip_code: {
+        type: Sequelize.STRING(9),
         allowNull: false,
       },
       created_at: {
@@ -40,6 +52,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('students');
+    return queryInterface.dropTable('recipients');
   },
 };

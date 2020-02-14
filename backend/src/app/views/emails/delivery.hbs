@@ -1,0 +1,18 @@
+<strong>Olá {{ deliveryman }}</strong>
+<p>Há uma nova encomenda aguardando sua retirada conforme informações a seguir:</p>
+<p>
+  <strong>Data e hora de chegada: </strong> {{ date }} <br />
+  <strong>Produto: </strong> {{ product }} <br />
+  <strong>Destinatário: </strong> {{ recipient }} <br />
+  <strong>Endereço para entrega: </strong><br />
+  {{ street }}, {{ number }}, {{ district }} <br />
+  {{ city }} - {{ state }} <br />
+  {{ zip_code }} <br />
+  {{ complement }}
+  <br />
+  <small>
+    Lembramos ainda que a retirada
+    poderá ser realizada das 8 até as 18h.
+    Limite de 5 retiradas por dia.
+  </small>
+</p>

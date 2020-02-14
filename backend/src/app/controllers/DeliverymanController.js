@@ -20,7 +20,15 @@ class DeliverymanController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const { name, avatar_id, email } = await Deliveryman.create(req.body);
+    const { email } = req.body;
+
+    const deliverymanExists = await Deliveryman.findOne({ where: { email } });
+
+    if (deliverymanExists) {
+      return res.status(400).json({ error: 'Deliveryman already exists' });
+    }
+
+    const { name, avatar_id } = await Deliveryman.create(req.body);
 
     return res.json({
       name,
@@ -48,7 +56,19 @@ class DeliverymanController {
         .json({ error: 'This deliveryman does not exists!' });
     }
 
-    const { name, avatar_id, email } = await deliveryman.update(req.body);
+    const { email } = req.body;
+
+    if (email && email !== deliveryman.email) {
+      const deliverymanExists = await Deliveryman.findOne({ where: { email } });
+
+      if (deliverymanExists) {
+        return res
+          .status(400)
+          .json({ error: "Deliveryman's email already registered" });
+      }
+    }
+
+    const { name, avatar_id } = await deliveryman.update(req.body);
 
     return res.json({
       name,

@@ -21,17 +21,25 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
+      signature_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      product: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+      },
       canceled_at: {
         type: Sequelize.DATE,
         allowNull: true,
       },
       start_date: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       end_date: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,

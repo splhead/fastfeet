@@ -11,11 +11,12 @@ export default class Deliveryman extends Model {
       {
         sequelize,
         tableName: 'deliverymen',
-        /*  name: {
-          singular: 'deliveryman',
-          plural: 'deliverymen',
-        }, */
       }
     );
+    return this;
+  }
+
+  static associate(models) {
+    this.belongsTo(models.File, { foreignKey: 'avatar_id' });
   }
 }

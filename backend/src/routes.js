@@ -1,17 +1,38 @@
 import { Router } from 'express';
-
+import multer from 'multer';
+import multerConfig from './config/multer';
 import authMiddleware from './app/middlewares/auth';
 
 import UserController from './app/controllers/UserController';
+import FileController from './app/controllers/FileController';
 import RecipientController from './app/controllers/RecipientController';
 import DeliverymanController from './app/controllers/DeliverymanController';
 import DeliveryController from './app/controllers/DeliveryController';
 import SessionController from './app/controllers/SessionController';
+import OrderController from './app/controllers/OrderController';
+import OrderHistoryController from './app/controllers/OrderHistoryController';
 
 const routes = new Router();
+const upload = multer(multerConfig);
+
+// Upload files
+routes.post('/files', upload.single('file'), FileController.store);
 
 routes.post('/sessions', SessionController.store);
-/* routes.get('/deliverymen/:deliverymenId/deliveries', DeliveryController.index); */
+
+// Deliveries from deliveryman
+routes.get('/deliverymen/:deliverymanId/deliveries', OrderController.index);
+// Withdraw a delivery
+routes.put(
+  '/deliverymen/:deliverymanId/deliveries/:deliveryId',
+  OrderController.update
+);
+
+// Finsh delivery
+routes.get(
+  '/deliverymen/:deliverymanId/deliveries/finished',
+  OrderHistoryController.index
+);
 
 routes.use(authMiddleware);
 
@@ -29,5 +50,7 @@ routes.delete('/deliverymen/:deliverymanId', DeliverymanController.destroy);
 
 routes.get('/deliveries', DeliveryController.index);
 routes.post('/deliveries', DeliveryController.store);
+routes.put('/deliveries/:deliveryId', DeliveryController.update);
+routes.delete('/deliveries/:deliveryId', DeliveryController.delete);
 
 export default routes;

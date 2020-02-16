@@ -88,7 +88,7 @@ class RecipientController {
 
     await recipient.destroy();
 
-    return res.json();
+    return res.json({ message: 'Recipient was deleted' });
   }
 }
 

@@ -99,26 +99,6 @@ class DeliveryController {
 
     return res.json(deliveryUpdated);
   }
-
-  async delete(req, res) {
-    const delivery = await Delivery.findOne({
-      where: {
-        id: req.params.deliveryId,
-        canceled_at: null,
-        end_date: null,
-      },
-    });
-
-    if (!delivery) {
-      return res.status(400).json({ error: 'Delivery does not exists' });
-    }
-
-    await delivery.update({
-      canceled_at: new Date(),
-    });
-
-    return res.json();
-  }
 }
 
 export default new DeliveryController();

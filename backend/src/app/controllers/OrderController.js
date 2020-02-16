@@ -36,7 +36,7 @@ class OrderController {
       return res.status(400).json({ error: 'Deliveryman does not exists!' });
     }
 
-    const start_date = new Date('2020-02-16T08:34:00-04:00');
+    const start_date = new Date();
     const hour = getHours(start_date);
 
     if (hour < 8 || hour > 18) {
@@ -76,9 +76,10 @@ class OrderController {
     });
 
     if (!delivery) {
-      return res
-        .status(400)
-        .json({ error: 'Delivery does not exists or was canceled!' });
+      return res.status(400).json({
+        error:
+          'Delivery does not exists or was canceled or has already been withdrawed!',
+      });
     }
 
     const deliveryWithdrawed = await delivery.update({

@@ -1,7 +1,16 @@
 import React from 'react';
 
-import { MyInput } from './styles';
+import { MdSearch } from 'react-icons/md';
 
-export default function SearchInput({ name }) {
-  return <div />;
+import colors from '~/util/colors';
+
+import { Container, MyInput } from './styles';
+
+export default function SearchInput({ name, ...rest }) {
+  return (
+    <Container>
+      <MdSearch size={20} color={colors.placeholder} />
+      <MyInput name={name} {...rest} />
+    </Container>
+  );
 }

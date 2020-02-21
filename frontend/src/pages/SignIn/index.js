@@ -4,10 +4,9 @@ import * as Yup from 'yup';
 import { Form } from '@unform/web';
 
 import logo from '~/assets/logo.svg';
-import { Container } from './styles';
+import { Container, Button } from './styles';
 
 import Input from '~/components/Form/Input';
-import Button from '~/components/Form/Button';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 

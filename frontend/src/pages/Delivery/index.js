@@ -4,6 +4,8 @@ import { MdAdd } from 'react-icons/md';
 
 import Button from '~/components/Form/IconButton';
 import SearchInput from '~/components/Form/SearchInput';
+import DeliveryStatus from '~/components/DeliveryStatus';
+import ActionMenu from '~/components/ActionMenu';
 
 import { HeaderContainer, Table, TableAvatarContainer } from './styles';
 
@@ -44,8 +46,12 @@ export default function Delivery() {
             </td>
             <td>Rio do Sul</td>
             <td>Santa Catarina</td>
-            <td>Entregue</td>
-            <td />
+            <td>
+              <DeliveryStatus>ENTREGUE</DeliveryStatus>
+            </td>
+            <td>
+              <ActionMenu />
+            </td>
           </tr>
           <tr>
             <td>#01</td>
@@ -53,8 +59,38 @@ export default function Delivery() {
             <td>Jonh Doe</td>
             <td>Rio do Sul</td>
             <td>Santa Catarina</td>
-            <td>Entregue</td>
-            <td />
+            <td>
+              <DeliveryStatus>PENDENTE</DeliveryStatus>
+            </td>
+            <td>
+              <ActionMenu />
+            </td>
+          </tr>
+          <tr>
+            <td>#01</td>
+            <td>Ludwing Van Bethoven</td>
+            <td>Jonh Doe</td>
+            <td>Rio do Sul</td>
+            <td>Santa Catarina</td>
+            <td>
+              <DeliveryStatus>RETIRADA</DeliveryStatus>
+            </td>
+            <td>
+              <ActionMenu />
+            </td>
+          </tr>
+          <tr>
+            <td>#01</td>
+            <td>Ludwing Van Bethoven</td>
+            <td>Jonh Doe</td>
+            <td>Rio do Sul</td>
+            <td>Santa Catarina</td>
+            <td>
+              <DeliveryStatus>CANCELADA</DeliveryStatus>
+            </td>
+            <td>
+              <ActionMenu />
+            </td>
           </tr>
         </tbody>
       </Table>

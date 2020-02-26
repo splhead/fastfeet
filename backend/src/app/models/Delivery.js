@@ -11,6 +11,22 @@ export default class Delivery extends Model {
         canceled_at: Sequelize.DATE,
         start_date: Sequelize.DATE,
         end_date: Sequelize.DATE,
+        status: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            let status = '';
+            if (this.canceled_at) {
+              status = 'CANCELADA';
+            } else if (this.end_date) {
+              status = 'ENTREGUE';
+            } else if (this.start_date) {
+              status = 'RETIRADA';
+            } else {
+              status = 'PENDENTE';
+            }
+            return status;
+          },
+        },
       },
       {
         sequelize,

@@ -1,19 +1,22 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import { MdMoreHoriz } from 'react-icons/md';
-import { Container, ActionList, Action, Button } from './styles';
 
-export default function ActionMenu() {
+import Action from './Action';
+
+import { Container, ActionList, Button } from './styles';
+
+export default function ActionMenu({ children }) {
+  const [visible, setVisible] = useState(false);
+  function handleOnClick() {
+    setVisible(!visible);
+  }
+
   return (
     <Container>
-      <Button>
+      <Button onClick={handleOnClick}>
         <MdMoreHoriz size={24} color="#c6c6c6" />
       </Button>
-      <ActionList>
-        <Action type="view">Visualizar</Action>
-        <Action type="edit">Editar</Action>
-        <Action type="delete">Excluir</Action>
-      </ActionList>
+      <ActionList visible={visible}>{children}</ActionList>
     </Container>
   );
 }

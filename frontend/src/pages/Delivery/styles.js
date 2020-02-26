@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Form } from '@unform/web';
 
 import colors from '~/util/colors';
 
@@ -35,7 +36,7 @@ export const Table = styled.table`
   }
 `;
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled(Form)`
   display: flex;
   align-items: center;
   justify-content: space-between;

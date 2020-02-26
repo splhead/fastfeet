@@ -20,10 +20,35 @@ class DeliveryController {
               [Op.iLike]: `%${filter}%`,
             },
           },
+          include: [
+            {
+              model: Recipient,
+              attributes: ['name', 'city', 'state'],
+            },
+            {
+              model: Deliveryman,
+              attributes: ['name'],
+            },
+          ],
+          order: ['id'],
         })
       );
     }
-    return res.json(await Delivery.findAll());
+    return res.json(
+      await Delivery.findAll({
+        include: [
+          {
+            model: Recipient,
+            attributes: ['name', 'city', 'state'],
+          },
+          {
+            model: Deliveryman,
+            attributes: ['name'],
+          },
+        ],
+        order: ['id'],
+      })
+    );
   }
 
   async store(req, res) {
@@ -112,6 +137,22 @@ class DeliveryController {
     const deliveryUpdated = await delivery.update(req.body);
 
     return res.json(deliveryUpdated);
+  }
+
+  async delete(req, res) {
+    const delivery = await Delivery.findOne({
+      where: {
+        id: req.params.deliveryId,
+      },
+    });
+
+    if (!delivery) {
+      return res.status(400).json({ error: 'Delivery does not exists' });
+    }
+
+    await delivery.destroy();
+
+    return res.json({ message: 'Delivery was deleted' });
   }
 }
 

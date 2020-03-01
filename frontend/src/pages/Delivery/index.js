@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
@@ -10,15 +10,17 @@ import SearchInput from '~/components/Form/SearchInput';
 import DeliveryStatus from '~/components/DeliveryStatus';
 import ActionMenu from '~/components/ActionMenu';
 import Modal from '~/components/Modal';
+import Form from '~/components/Form';
+import Table from '~/components/Table';
 
-import { HeaderContainer, Table, TableAvatarContainer } from './styles';
+import { TableAvatarContainer } from './styles';
 
 const addIcon = props => <MdAdd size={24} color="#fff" />;
 
 export default function Delivery() {
   const [deliveries, setDeliveries] = useState();
   const [delivery, setDelivery] = useState();
-  const [modalIsOpen, setModalOpened] = useState(false);
+  const [modalIsOpen, setIsOpened] = useState(false);
 
   async function loadDelivery(data) {
     if (data) {
@@ -52,13 +54,13 @@ export default function Delivery() {
     const delivery = response.data;
 
     if (delivery) {
-      setModalOpened(true);
+      setIsOpened(true);
       setDelivery(delivery);
     }
   }
 
   function closeModal() {
-    setModalOpened(false);
+    setIsOpened(false);
   }
 
   function handleEdit(id) {
@@ -86,12 +88,12 @@ export default function Delivery() {
   return (
     <>
       <h1>Gerenciando encomendas</h1>
-      <HeaderContainer onSubmit={handleSearch}>
+      <Form onSubmit={handleSearch}>
         <SearchInput name="search" placeholder="Buscar por encomendas" />
         <Button icon={addIcon} onClick={handleAdd}>
           CADASTRAR
         </Button>
-      </HeaderContainer>
+      </Form>
       <Table>
         <thead>
           <tr>
@@ -146,6 +148,7 @@ export default function Delivery() {
             ))}
         </tbody>
       </Table>
+      {console.tron.log(delivery)}
       {delivery && (
         <Modal isOpen={modalIsOpen} requestClose={closeModal}>
           <div>

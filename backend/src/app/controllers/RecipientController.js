@@ -27,7 +27,6 @@ class RecipientController {
       street: Yup.string().required(),
       number: Yup.string().required(),
       complement: Yup.string(),
-      district: Yup.string().required(),
       state: Yup.string().required(),
       city: Yup.string().required(),
       zip_code: Yup.string().required(),
@@ -37,8 +36,10 @@ class RecipientController {
       return res.status(400).json({ error: 'Validation fails!' });
     }
 
-    const { name, city } = req.body;
-    const recipientExist = await Recipient.findOne({ where: { name, city } });
+    const { name, street, number } = req.body;
+    const recipientExist = await Recipient.findOne({
+      where: { name, street, number },
+    });
 
     if (recipientExist) {
       return res.status(400).json({ error: 'Recipient already exists!' });
@@ -64,18 +65,24 @@ class RecipientController {
       return res.status(400).json({ error: 'Validation fails!' });
     }
 
-    const { recipientId } = req.params;
+    const recipient = await Recipient.findByPk(req.params.recipientId);
 
-    if (!recipientId) {
-      return res.status(400).json({ error: "Recipient's Id not provided!" });
+    if (!recipient) {
+      return res.status(400).json({ error: 'Recipient does not exists.' });
     }
-
-    const recipient = await Recipient.findByPk(recipientId);
-
     const { name } = req.body;
 
-    if (name && name !== recipient.name) {
-      const recipientExist = await Recipient.findOne({ where: { name } });
+    if (
+      name &&
+      name !== recipient.name &&
+      street &&
+      street !== recipient.street &&
+      number &&
+      number !== recipient.number
+    ) {
+      const recipientExist = await Recipient.findOne({
+        where: { name, street, number },
+      });
 
       if (recipientExist) {
         return res.status(400).json({ error: 'recipient already exists!' });

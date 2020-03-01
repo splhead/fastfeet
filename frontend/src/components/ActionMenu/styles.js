@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import colors from '~/util/colors';
 
 export const Container = styled.div`
+  width: 24px;
   position: relative;
-  text-align: right;
+  float: right;
 `;
 
 export const ActionList = styled.div`
-  display: ${props => (props.visible ? 'block' : 'none')};
+  display: ${props => (props.visible ? 'flex' : 'none')};
+  flex-direction: column;
 
   position: absolute;
   text-align: left;
@@ -18,6 +20,7 @@ export const ActionList = styled.div`
   padding: 10px;
   box-shadow: 0px 0px 2px #00000026;
   z-index: 1;
+  transform: translateX(-38%);
 
   /* &::before {
     content: '';

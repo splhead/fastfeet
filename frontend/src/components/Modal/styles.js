@@ -25,6 +25,10 @@ export const Content = styled.div`
     margin-top: 20px;
   }
 
+  div:last-of-type {
+    margin-bottom: 48px;
+  }
+
   div span.title {
     font-weight: bold;
     color: ${colors.darkText};

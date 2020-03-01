@@ -59,7 +59,14 @@ class DeliveryController {
       include: [
         {
           model: Recipient,
-          attributes: ['street', 'number', 'complement', 'city', 'state'],
+          attributes: [
+            'street',
+            'number',
+            'complement',
+            'city',
+            'state',
+            'zip_code',
+          ],
         },
       ],
     });

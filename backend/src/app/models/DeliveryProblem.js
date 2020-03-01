@@ -5,7 +5,7 @@ export default class DeliveryProblem extends Model {
     super.init(
       {
         delivery_id: Sequelize.INTEGER,
-        description: Sequelize.STRING,
+        description: Sequelize.TEXT,
       },
       {
         sequelize,

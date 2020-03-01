@@ -53,7 +53,7 @@ routes.delete('/deliverymen/:deliverymanId', DeliverymanController.destroy);
 
 // Problems
 routes.get('/deliveries/problems', DeliveryProblemController.index);
-routes.get('/delivery/:deliveryId/problems', DeliveryProblemController.show);
+routes.get('/deliveries/:deliveryId/problems', DeliveryProblemController.show);
 
 // Cancellation
 routes.delete(

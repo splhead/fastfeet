@@ -51,6 +51,26 @@ class DeliveryController {
     );
   }
 
+  async show(req, res) {
+    const delivery = await Delivery.findOne({
+      where: {
+        id: req.params.deliveryId,
+      },
+      include: [
+        {
+          model: Recipient,
+          attributes: ['street', 'number', 'complement', 'city', 'state'],
+        },
+      ],
+    });
+
+    if (!delivery) {
+      return res.status(400).json({ error: 'Delivery does not exists' });
+    }
+
+    return res.json(delivery);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       recipient_id: Yup.number().required(),

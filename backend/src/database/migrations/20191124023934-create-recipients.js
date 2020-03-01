@@ -24,12 +24,8 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: true,
       },
-      district: {
-        type: Sequelize.STRING(50),
-        allowNull: false,
-      },
       state: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING(2),
         allowNull: false,
       },
       city: {

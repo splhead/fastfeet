@@ -8,7 +8,6 @@ export default class Recipient extends Model {
         street: Sequelize.STRING,
         number: Sequelize.STRING,
         complement: Sequelize.STRING,
-        district: Sequelize.STRING,
         state: Sequelize.STRING,
         city: Sequelize.STRING,
         zip_code: Sequelize.STRING,

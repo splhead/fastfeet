@@ -2,9 +2,7 @@ import styled from 'styled-components';
 
 import colors from '~/util/colors';
 
-export const Wrapper = styled.div`
-  background: #f5f5f5;
-`;
+export const Wrapper = styled.div``;
 
 export const Content = styled.div`
   width: 100%;

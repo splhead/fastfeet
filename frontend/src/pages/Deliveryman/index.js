@@ -34,24 +34,19 @@ export default function Deliveryman() {
     loadDeliveryman();
   }, []);
 
-  function handleAdd() {
-    console.tron.log('add');
-  }
+  function handleAdd() {}
 
   async function handleSearch(data) {
     loadDeliveryman(data);
   }
 
-  function handleEdit(id) {
-    console.tron.log('edit', id);
-  }
+  function handleEdit(id) {}
 
   async function handleDelete(id) {
     const answer = window.confirm('Deseja realmente excluir?');
 
     if (answer) {
-      const response = await api.delete(`deliverymen/${id}`);
-      console.tron.log(response);
+      await api.delete(`deliverymen/${id}`);
       loadDeliveryman();
     }
   }

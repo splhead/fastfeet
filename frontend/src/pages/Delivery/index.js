@@ -59,16 +59,13 @@ export default function Delivery() {
     setIsOpened(false);
   }
 
-  function handleEdit(id) {
-    console.tron.log('edit', id);
-  }
+  function handleEdit(id) {}
 
   async function handleDelete(id) {
     const answer = window.confirm('Deseja realmente excluir a encomenda?');
 
     if (answer) {
-      const response = await api.delete(`deliveries/${id}`);
-      console.tron.log(response);
+      await api.delete(`deliveries/${id}`);
       loadDelivery();
     }
   }
@@ -145,7 +142,6 @@ export default function Delivery() {
             ))}
         </tbody>
       </Table>
-      {console.tron.log(delivery)}
       {delivery && (
         <Modal isOpen={modalIsOpen} requestClose={closeModal}>
           <div>

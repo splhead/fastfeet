@@ -24,7 +24,6 @@ export default function DeliveryProblem() {
 
   async function handleView(id) {
     const response = await api.get(`deliveries/${id}/problems`);
-    console.tron.log(response);
     const problem = response.data;
 
     if (problem) {
@@ -41,8 +40,8 @@ export default function DeliveryProblem() {
     const answer = window.confirm('Deseja realmente cancelar a encomenda?');
 
     if (answer) {
-      const response = await api.delete(`/problem/${id}/cancel-delivery`);
-      console.tron.log(response);
+      await api.delete(`/problem/${id}/cancel-delivery`);
+
       loadProblems();
     }
   }

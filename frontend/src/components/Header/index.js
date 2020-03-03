@@ -24,16 +24,16 @@ export default function Header() {
           <img src={logo} alt="FastFeet" />
           <Bar />
           <nav>
-            <NavLink to="/delivery" activeClassName="selected" exact>
+            <NavLink to="/delivery" activeClassName="selected">
               ENCOMENDAS
             </NavLink>
-            <NavLink to="/deliveryman" activeClassName="selected" exact>
+            <NavLink to="/deliveryman" activeClassName="selected">
               ENTREGADORES
             </NavLink>
-            <NavLink to="/recipient" activeClassName="selected" exact>
+            <NavLink to="/recipient" activeClassName="selected">
               DESTINATÁRIOS
             </NavLink>
-            <NavLink to="/problem" activeClassName="selected" exact>
+            <NavLink to="/problem" activeClassName="selected">
               PROBLEMAS
             </NavLink>
           </nav>

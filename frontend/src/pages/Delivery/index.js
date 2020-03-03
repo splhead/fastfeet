@@ -41,10 +41,6 @@ export default function Delivery() {
     loadDelivery();
   }, []);
 
-  function handleAdd() {
-    console.tron.log('add');
-  }
-
   async function handleSearch(data) {
     loadDelivery(data);
   }
@@ -90,7 +86,8 @@ export default function Delivery() {
       <h1>Gerenciando encomendas</h1>
       <Form onSubmit={handleSearch}>
         <SearchInput name="search" placeholder="Buscar por encomendas" />
-        <Button icon={addIcon} onClick={handleAdd}>
+
+        <Button icon={addIcon} to="/delivery/add">
           CADASTRAR
         </Button>
       </Form>
@@ -109,7 +106,7 @@ export default function Delivery() {
         <tbody>
           {deliveries &&
             deliveries.map(delivery => (
-              <tr>
+              <tr key={delivery.id.toString()}>
                 <td>#{delivery.id.toString().padStart(2, '0')}</td>
                 <td>{delivery.Recipient.name}</td>
                 <td>

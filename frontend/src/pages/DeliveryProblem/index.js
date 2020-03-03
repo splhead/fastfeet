@@ -1,19 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { MdAdd } from 'react-icons/md';
 import api from '~/services/api';
 
-import Button from '~/components/Form/IconButton';
-import SearchInput from '~/components/Form/SearchInput';
-import DeliveryStatus from '~/components/DeliveryStatus';
 import ActionMenu from '~/components/ActionMenu';
 import Modal from '~/components/Modal';
-import Form from '~/components/Form';
 import Table from '~/components/Table';
-
-import { TableAvatarContainer } from './styles';
-
-const addIcon = props => <MdAdd size={24} color="#fff" />;
 
 export default function DeliveryProblem() {
   const [problems, setProblems] = useState();

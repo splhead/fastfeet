@@ -25,6 +25,7 @@ export default function ActionMenu({ actions }) {
       <ActionList visible={visible}>
         {actions.map(action => (
           <Action
+            key={action.type}
             type={action.type}
             onClick={() => handleOnClick(action.onClick)}
             label={action.label}

@@ -1,46 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Container } from './styles';
+import { Container, Content } from './styles';
 
-export default function DeliveryStatus({ children }) {
-  const [background, setBackground] = useState();
-  const [color, setColor] = useState();
-  const [width, setWidth] = useState();
-
-  useEffect(() => {
-    switch (children) {
-      case 'ENTREGUE': {
-        setBackground('#dff0df');
-        setColor('#2ca42b');
-        setWidth('99px');
-        break;
-      }
-      case 'PENDENTE': {
-        setBackground('#F0F0DF');
-        setColor('#C1BC35');
-        setWidth('102px');
-        break;
-      }
-      case 'RETIRADA': {
-        setBackground('#BAD2FF');
-        setColor('#4D85EE');
-        setWidth('97px');
-        break;
-      }
-      case 'CANCELADA': {
-        setBackground('#FAB0B0');
-        setColor('#DE3B3B');
-        setWidth('110px');
-        break;
-      }
-      default:
-    }
-  }, [children]);
-
+export default function DeliveryStatus({ background, color, children }) {
   return (
-    <Container background={background} color={color} width={width}>
-      <div className="elipse" />
-      {children}
+    <Container>
+      <Content background={background} color={color}>
+        <div className="elipse" />
+        <span>{children}</span>
+      </Content>
     </Container>
   );
 }
+
+DeliveryStatus.propTypes = {
+  children: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  background: PropTypes.string.isRequired,
+};

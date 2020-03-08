@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useField } from '@unform/core';
 
-import { FormGroup, Label, MyInput } from './style';
+import { FormGroup, Label, MyInput } from './styles';
 
 export default function Input({ name, label, ...rest }) {
   const inputRef = useRef(null);

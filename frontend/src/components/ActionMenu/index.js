@@ -1,37 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MdMoreHoriz } from 'react-icons/md';
+import Popup from 'reactjs-popup';
 
-import Action from './Action';
+import PropTypes from 'prop-types';
 
-import { Container, ActionList, Button } from './styles';
+import { Content, MoreButton } from './styles';
 
-export default function ActionMenu({ actions }) {
-  const [visible, setVisible] = useState(false);
-
-  function handleVisibility() {
-    setVisible(!visible);
-  }
-
-  function handleOnClick(action) {
-    action();
-    setVisible(!visible);
-  }
-
+export default function ActionMenu({ children, ...rest }) {
   return (
-    <Container>
-      <Button onClick={handleVisibility}>
-        <MdMoreHoriz size={24} color="#c6c6c6" />
-      </Button>
-      <ActionList visible={visible}>
-        {actions.map(action => (
-          <Action
-            key={action.type}
-            type={action.type}
-            onClick={() => handleOnClick(action.onClick)}
-            label={action.label}
-          />
-        ))}
-      </ActionList>
-    </Container>
+    <Popup
+      trigger={
+        <MoreButton type="button">
+          <MdMoreHoriz color="#C6C6C6" size={24} />
+        </MoreButton>
+      }
+      position="bottom center"
+      contentStyle={{
+        width: '135px',
+        borderRadius: '4px',
+        paddingLeft: '10px',
+        paddingRight: '10px',
+      }}
+      {...rest}
+    >
+      <Content>{children}</Content>
+    </Popup>
   );
 }
+
+ActionMenu.propTypes = {
+  children: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.element])
+      .isRequired
+  ),
+};

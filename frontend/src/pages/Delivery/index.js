@@ -2,47 +2,52 @@ import React, { useState, useEffect } from 'react';
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
-import { MdAdd } from 'react-icons/md';
 import api from '~/services/api';
+import history from '~/services/history';
 
-import Button from '~/components/Form/IconButton';
+import { statusColors } from '~/util/colors';
+
+import { AddButton } from '~/components/Form/Button';
 import SearchInput from '~/components/Form/SearchInput';
 import DeliveryStatus from '~/components/DeliveryStatus';
 import ActionMenu from '~/components/ActionMenu';
+import ViewAction from '~/components/ActionMenu/ViewAction';
+import EditAction from '~/components/ActionMenu/EditAction';
+import DeleteAction from '~/components/ActionMenu/DeleteAction';
 import Modal from '~/components/Modal';
-import Form from '~/components/Form';
 import Table from '~/components/Table';
+import HeaderContainer from '~/components/HeaderContainer';
 
 import { TableAvatarContainer } from './styles';
-
-const addIcon = props => <MdAdd size={24} color="#fff" />;
 
 export default function Delivery() {
   const [deliveries, setDeliveries] = useState();
   const [delivery, setDelivery] = useState();
   const [modalIsOpen, setIsOpened] = useState(false);
 
-  async function loadDelivery(data) {
-    if (data) {
-      const { search } = data;
-      const response = await api.get(`deliveries?q=${search}`);
-      if (response) {
-        setDeliveries(response.data);
-      }
-    } else {
-      const response = await api.get('deliveries');
-      if (response) {
-        setDeliveries(response.data);
-      }
+  async function loadDelivery() {
+    const response = await api.get('deliveries');
+    if (response) {
+      const data = addFormattedFields(response.data);
+      setDeliveries(data);
     }
   }
 
   useEffect(() => {
     loadDelivery();
-  }, []);
+  }, []); //eslint-disable-line
 
-  async function handleSearch(data) {
-    loadDelivery(data);
+  async function handleSearch(product) {
+    const response = await api.get('deliveries', {
+      params: {
+        q: product,
+      },
+    });
+
+    if (response) {
+      const data = addFormattedFields(response.data);
+      setDeliveries(data);
+    }
   }
 
   async function handleView(id) {
@@ -50,8 +55,8 @@ export default function Delivery() {
     const delivery = response.data;
 
     if (delivery) {
-      setIsOpened(true);
       setDelivery(delivery);
+      setIsOpened(true);
     }
   }
 
@@ -78,16 +83,26 @@ export default function Delivery() {
     }
   }
 
+  function addFormattedFields(data) {
+    return data.map(delivery => ({
+      ...delivery,
+      id: delivery.id.toString().padStart(2, '0'),
+      start_date: formatDate(delivery.start_date),
+      end_date: formatDate(delivery.end_date),
+    }));
+  }
+
   return (
     <>
-      <h1>Gerenciando encomendas</h1>
-      <Form onSubmit={handleSearch}>
-        <SearchInput name="search" placeholder="Buscar por encomendas" />
+      <HeaderContainer title="Gerenciando encomendas">
+        <SearchInput
+          name="search"
+          placeholder="Buscar por encomendas"
+          onChange={e => handleSearch(e.target.value)}
+        />
 
-        <Button icon={addIcon} to="/delivery/add">
-          CADASTRAR
-        </Button>
-      </Form>
+        <AddButton action={() => history.push('delivery/form')} />
+      </HeaderContainer>
       <Table>
         <thead>
           <tr>
@@ -103,8 +118,8 @@ export default function Delivery() {
         <tbody>
           {deliveries &&
             deliveries.map(delivery => (
-              <tr key={delivery.id.toString()}>
-                <td>#{delivery.id.toString().padStart(2, '0')}</td>
+              <tr key={delivery.id}>
+                <td>#{delivery.id}</td>
                 <td>{delivery.Recipient.name}</td>
                 <td>
                   <TableAvatarContainer>
@@ -118,25 +133,19 @@ export default function Delivery() {
                 <td>{delivery.Recipient.city}</td>
                 <td>{delivery.Recipient.state}</td>
                 <td>
-                  <DeliveryStatus>{delivery.status}</DeliveryStatus>
+                  <DeliveryStatus
+                    color={statusColors[delivery.status].color}
+                    background={statusColors[delivery.status].background}
+                  >
+                    {delivery.status}
+                  </DeliveryStatus>
                 </td>
                 <td>
-                  <ActionMenu
-                    actions={[
-                      {
-                        type: 'view',
-                        onClick: () => handleView(delivery.id),
-                      },
-                      {
-                        type: 'edit',
-                        onClick: () => handleEdit(delivery.id),
-                      },
-                      {
-                        type: 'delete',
-                        onClick: () => handleDelete(delivery.id),
-                      },
-                    ]}
-                  />
+                  <ActionMenu>
+                    <ViewAction action={() => handleView(delivery.id)} />
+                    <EditAction action={handleEdit} />
+                    <DeleteAction action={handleDelete} />
+                  </ActionMenu>
                 </td>
               </tr>
             ))}
@@ -162,10 +171,10 @@ export default function Delivery() {
             <span className="title">Datas</span>
             <br />
             <span className="bold">Retirada:</span>
-            <span>{formatDate(delivery.start_date)}</span>
+            <span>{delivery.start_date}</span>
             <br />
             <span className="bold">Entrega:</span>
-            <span>{formatDate(delivery.end_date)}</span>
+            <span>{delivery.end_date}</span>
           </div>
 
           <div>

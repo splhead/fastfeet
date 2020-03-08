@@ -13,7 +13,7 @@ export const FormGroup = styled.div`
 `;
 
 export const MyInput = styled.input`
-  height: 48px;
+  min-height: 38px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;

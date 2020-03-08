@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { MdAdd } from 'react-icons/md';
 import api from '~/services/api';
+import history from '~/services/history';
 
-import Button from '~/components/Form/IconButton';
+import { AddButton } from '~/components/Form/Button';
 import SearchInput from '~/components/Form/SearchInput';
 import ActionMenu from '~/components/ActionMenu';
 import Form from '~/components/Form';
 import Table from '~/components/Table';
-
-// import {} from './styles';
-
-const addIcon = props => <MdAdd size={24} color="#fff" />;
 
 export default function Recipient() {
   const [recipients, setRecipients] = useState();
@@ -34,7 +30,9 @@ export default function Recipient() {
     loadDeliveryman();
   }, []);
 
-  function handleAdd() {}
+  function handleAdd() {
+    history.push('/recipient/add');
+  }
 
   async function handleSearch(data) {
     loadDeliveryman(data);
@@ -57,9 +55,7 @@ export default function Recipient() {
       <h1>Gerenciando destinatários</h1>
       <Form onSubmit={handleSearch}>
         <SearchInput name="search" placeholder="Buscar por destinatários" />
-        <Button icon={addIcon} onClick={handleAdd}>
-          CADASTRAR
-        </Button>
+        <AddButton action={handleAdd} />
       </Form>
       <Table>
         <thead>

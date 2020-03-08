@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { MdAdd } from 'react-icons/md';
 import api from '~/services/api';
+import history from '~/services/history';
 
-import Button from '~/components/Form/IconButton';
+import { AddButton } from '~/components/Form/Button';
 import SearchInput from '~/components/Form/SearchInput';
 import ActionMenu from '~/components/ActionMenu';
 import Form from '~/components/Form';
 import Table from '~/components/Table';
 
 import { TableAvatarContainer } from './styles';
-
-const addIcon = props => <MdAdd size={24} color="#fff" />;
 
 export default function Deliveryman() {
   const [deliverymen, setDeliverymen] = useState();
@@ -34,7 +32,9 @@ export default function Deliveryman() {
     loadDeliveryman();
   }, []);
 
-  function handleAdd() {}
+  function handleAdd() {
+    history.push('deliveryman/add');
+  }
 
   async function handleSearch(data) {
     loadDeliveryman(data);
@@ -56,9 +56,7 @@ export default function Deliveryman() {
       <h1>Gerenciando entregadores</h1>
       <Form onSubmit={handleSearch}>
         <SearchInput name="search" placeholder="Buscar por entregadores" />
-        <Button icon={addIcon} onClick={handleAdd}>
-          CADASTRAR
-        </Button>
+        <AddButton action={handleAdd} />
       </Form>
       <Table>
         <thead>

@@ -23,7 +23,14 @@ class DeliveryController {
           include: [
             {
               model: Recipient,
-              attributes: ['name', 'city', 'state'],
+              attributes: [
+                'street',
+                'number',
+                'complement',
+                'city',
+                'state',
+                'zip_code',
+              ],
             },
             {
               model: Deliveryman,
@@ -39,7 +46,14 @@ class DeliveryController {
         include: [
           {
             model: Recipient,
-            attributes: ['name', 'city', 'state'],
+            attributes: [
+              'street',
+              'number',
+              'complement',
+              'city',
+              'state',
+              'zip_code',
+            ],
           },
           {
             model: Deliveryman,

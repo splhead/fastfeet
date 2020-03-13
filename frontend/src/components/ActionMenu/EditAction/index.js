@@ -1,20 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { MdModeEdit } from 'react-icons/md';
 import Action from '../Action';
 
-export default function EditAction({ action }) {
+export default function EditAction({ ...rest }) {
   return (
-    <Action
-      Icon={MdModeEdit}
-      iconColor="#4D85EE"
-      label="Editar"
-      action={action}
-    />
+    <Action Icon={MdModeEdit} iconColor="#4D85EE" label="Editar" {...rest} />
   );
 }
-
-EditAction.propTypes = {
-  action: PropTypes.func.isRequired,
-};

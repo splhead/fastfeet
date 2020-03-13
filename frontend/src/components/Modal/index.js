@@ -1,11 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Container, Content } from './styles';
+import { MyPopup } from './styles';
 
-export default function Modal({ requestClose, isOpen, children }) {
+export default function Modal({ trigger, children }) {
   return (
-    <Container isOpen={isOpen} onClick={requestClose}>
-      <Content>{children}</Content>
-    </Container>
+    <MyPopup trigger={trigger} modal closeOnDocumentClick>
+      {children}
+    </MyPopup>
   );
 }
+
+Modal.propTypes = {
+  trigger: PropTypes.object.isRequired,
+};

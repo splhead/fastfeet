@@ -1,20 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Container } from './styles';
+import { Button } from './styles';
 
-export default function Action({ Icon, iconColor, label, action }) {
+export default function Action({ Icon, iconColor, label, ...rest }) {
   return (
-    <Container onClick={action}>
+    <Button {...rest}>
       {Icon && <Icon size={20} color={iconColor} />}
-      <span>{label}</span>
-    </Container>
+      {label && <span>{label}</span>}
+    </Button>
   );
 }
 
 Action.propTypes = {
   Icon: PropTypes.func,
   iconColor: PropTypes.string,
-  label: PropTypes.string.isRequired,
-  action: PropTypes.func.isRequired,
+  label: PropTypes.string,
 };

@@ -1,11 +1,12 @@
 import React, { useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useField } from '@unform/core';
 
 import { Container, MySelect } from './styles';
 
 export default function Select({ name, label, ...rest }) {
   const selectRef = useRef(null);
-  const { fieldName, registerField, error } = useField(name);
+  const { fieldName, registerField, defaultValue, error } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -35,9 +36,25 @@ export default function Select({ name, label, ...rest }) {
 
   return (
     <Container>
-      {label && <label htmlFor={name}>{label}</label>}
-      <MySelect ref={selectRef} name={name} {...rest} />
+      {label && <label>{label}</label>}
+      <MySelect
+        cacheOptions
+        defaultOptions
+        defaultValue={defaultValue}
+        ref={selectRef}
+        classNamePrefix="react-select"
+        {...rest}
+      />
       {error && <span className="error">{error}</span>}
     </Container>
   );
 }
+
+Select.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string,
+};
+
+Select.defaultProps = {
+  label: '',
+};

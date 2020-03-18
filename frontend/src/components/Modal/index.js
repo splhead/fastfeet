@@ -1,16 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { MdVisibility } from 'react-icons/md';
 
-import { MyPopup } from './styles';
+import { MyPopup, Button } from './styles';
 
-export default function Modal({ trigger, children }) {
+export default function Modal({ children, ...rest }) {
   return (
-    <MyPopup trigger={trigger} modal closeOnDocumentClick>
+    <MyPopup
+      trigger={
+        <Button>
+          <MdVisibility size={20} color="#8E5BE8" />
+          <span>Visualizar</span>
+        </Button>
+      }
+      modal
+      closeOnDocumentClick
+      {...rest}
+    >
       {children}
     </MyPopup>
   );
 }
 
 Modal.propTypes = {
-  trigger: PropTypes.object.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };

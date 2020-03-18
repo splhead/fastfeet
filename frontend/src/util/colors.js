@@ -5,6 +5,7 @@ export default {
   borderColor: '#dddddd',
   placeholder: '#999999',
   backButton: '#ccc',
+  error: '#de3b3b',
 };
 
 export const statusColors = {

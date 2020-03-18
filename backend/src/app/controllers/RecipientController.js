@@ -5,20 +5,41 @@ import Recipient from '../models/Recipient';
 
 class RecipientController {
   async index(req, res) {
-    const filter = req.query.q;
+    const { q: filter } = req.query;
 
-    if (filter) {
-      return res.json(
-        await Recipient.findAll({
-          where: {
-            name: {
-              [Op.iLike]: `%${filter}%`,
+    const response =
+      filter !== ''
+        ? await Recipient.findAll({
+            where: {
+              name: {
+                [Op.iLike]: `%${filter}%`,
+              },
             },
-          },
-        })
-      );
-    }
-    return res.json(await Recipient.findAll());
+            attributes: [
+              'id',
+              'name',
+              'street',
+              'number',
+              'complement',
+              'state',
+              'city',
+              'zip_code',
+            ],
+          })
+        : await Recipient.findAll({
+            attributes: [
+              'id',
+              'name',
+              'street',
+              'number',
+              'complement',
+              'state',
+              'city',
+              'zip_code',
+            ],
+          });
+
+    return res.json(response);
   }
 
   async store(req, res) {

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import { Content, MoreButton } from './styles';
 
-export default function ActionMenu({ children, ...rest }) {
+export default function ActionMenu({ children }) {
   return (
     <Popup
       trigger={
@@ -21,7 +21,6 @@ export default function ActionMenu({ children, ...rest }) {
         paddingLeft: '10px',
         paddingRight: '10px',
       }}
-      {...rest}
     >
       <Content>{children}</Content>
     </Popup>

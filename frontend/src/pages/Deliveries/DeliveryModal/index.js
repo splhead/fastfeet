@@ -3,9 +3,9 @@ import React from 'react';
 import { Container } from './styles';
 import Modal from '~/components/Modal';
 
-export default function DeliveryModal({ delivery, trigger }) {
+export default function DeliveryModal({ delivery }) {
   return (
-    <Modal trigger={trigger}>
+    <Modal contentStyle={{ width: '450px' }}>
       <Container>
         <div>
           <span className="title">Informações da encomenda</span>
@@ -21,15 +21,17 @@ export default function DeliveryModal({ delivery, trigger }) {
           </span>
         </div>
 
-        <div>
-          <span className="title">Datas</span>
-          <br />
-          <span className="bold">Retirada:</span>
-          <span>{delivery.start_date}</span>
-          <br />
-          <span className="bold">Entrega:</span>
-          <span>{delivery.end_date}</span>
-        </div>
+        {delivery.start_date && (
+          <div>
+            <span className="title">Datas</span>
+            <br />
+            <span className="bold">Retirada:</span>
+            <span>{delivery.start_date}</span>
+            <br />
+            <span className="bold">Entrega:</span>
+            <span>{delivery.end_date}</span>
+          </div>
+        )}
 
         {delivery.signature_id && (
           <div>

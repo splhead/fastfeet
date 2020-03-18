@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { Op } from 'sequelize';
+import File from '../models/File';
 
 import Deliveryman from '../models/Deliveryman';
 
@@ -7,25 +8,48 @@ class DeliverymanController {
   async index(req, res) {
     const filter = req.query.q;
 
-    if (filter) {
-      return res.json(
-        await Deliveryman.findAll({
+    const deliverymen = filter
+      ? await Deliveryman.findAll({
           where: {
             name: {
               [Op.iLike]: `%${filter}%`,
             },
           },
+          include: {
+            model: File,
+            as: 'avatar',
+            attributes: ['id', 'path', 'url'],
+          },
         })
-      );
+      : await Deliveryman.findAll({
+          include: {
+            model: File,
+            as: 'avatar',
+            attributes: ['id', 'path', 'url'],
+          },
+        });
+
+    return res.json(deliverymen);
+  }
+
+  async show(req, res) {
+    const deliveryman = await Deliveryman.findOne({
+      where: {
+        id: req.params.deliverymanId,
+      },
+    });
+
+    if (!deliveryman) {
+      return res.json({ error: 'Deliveryman does not exists' });
     }
 
-    return res.json(await Deliveryman.findAll());
+    return res.json(deliveryman);
   }
 
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
-      avatar_id: Yup.number().required(),
+      avatar_id: Yup.number(),
       email: Yup.string()
         .email()
         .required(),

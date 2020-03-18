@@ -4,6 +4,7 @@ import { Op } from 'sequelize';
 import Delivery from '../models/Delivery';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
+import File from '../models/File';
 
 import DeliveryMail from '../jobs/DeliveryMail';
 import Queue from '../../lib/Queue';
@@ -24,6 +25,7 @@ class DeliveryController {
             {
               model: Recipient,
               attributes: [
+                'name',
                 'street',
                 'number',
                 'complement',
@@ -35,6 +37,11 @@ class DeliveryController {
             {
               model: Deliveryman,
               attributes: ['name'],
+              include: {
+                model: File,
+                as: 'avatar',
+                attributes: ['id', 'path'],
+              },
             },
           ],
           order: ['id'],
@@ -47,6 +54,7 @@ class DeliveryController {
           {
             model: Recipient,
             attributes: [
+              'name',
               'street',
               'number',
               'complement',
@@ -58,6 +66,11 @@ class DeliveryController {
           {
             model: Deliveryman,
             attributes: ['name'],
+            include: {
+              model: File,
+              as: 'avatar',
+              attributes: ['id', 'path'],
+            },
           },
         ],
         order: ['id'],
@@ -74,6 +87,8 @@ class DeliveryController {
         {
           model: Recipient,
           attributes: [
+            'id',
+            'name',
             'street',
             'number',
             'complement',
@@ -81,6 +96,10 @@ class DeliveryController {
             'state',
             'zip_code',
           ],
+        },
+        {
+          model: Deliveryman,
+          attributes: ['id', 'name'],
         },
       ],
     });

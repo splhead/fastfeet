@@ -16,7 +16,7 @@ import OrderHistoryController from './app/controllers/OrderHistoryController';
 const routes = new Router();
 const upload = multer(multerConfig);
 
-// Upload files
+// Upload file
 routes.post('/files', upload.single('file'), FileController.store);
 
 routes.post('/sessions', SessionController.store);
@@ -47,6 +47,7 @@ routes.put('/recipients/:recipientId', RecipientController.update);
 routes.delete('/recipients/:recipientId', RecipientController.delete);
 
 routes.get('/deliverymen', DeliverymanController.index);
+routes.get('/deliverymen/:deliverymanId', DeliverymanController.show);
 routes.post('/deliverymen', DeliverymanController.store);
 routes.put('/deliverymen/:deliverymanId', DeliverymanController.update);
 routes.delete('/deliverymen/:deliverymanId', DeliverymanController.destroy);

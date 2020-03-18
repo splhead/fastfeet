@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
@@ -6,10 +7,10 @@ import { TableAvatarContainer } from './styles';
 
 import { statusColors } from '~/util/colors';
 import api from '~/services/api';
+import history from '~/services/history';
 
 import DeliveryStatus from '~/components/DeliveryStatus';
 import ActionMenu from '~/components/ActionMenu';
-import ViewAction from '~/components/ActionMenu/ViewAction';
 import EditAction from '~/components/ActionMenu/EditAction';
 import DeleteAction from '~/components/ActionMenu/DeleteAction';
 import DeliveryModal from '~/pages/Deliveries/DeliveryModal';
@@ -28,7 +29,7 @@ export default function Delivery({ data, loadDeliveries }) {
   const deliveryFormatted = useMemo(() => {
     return {
       ...data,
-      id: data.id.toString().padStart(2, '0'),
+      idFormatted: data.id.toString().padStart(2, '0'),
       start_date: formatDate(data.start_date),
       end_date: formatDate(data.end_date),
     };
@@ -39,7 +40,7 @@ export default function Delivery({ data, loadDeliveries }) {
   }, [deliveryFormatted]);
 
   async function handleDelete(id) {
-    const answer = window.confirm('Deseja realmente excluir a encomenda?');
+    const answer = window.confirm('Deseja realmente excluir?');
 
     if (answer) {
       await api.delete(`deliveries/${id}`);
@@ -48,15 +49,19 @@ export default function Delivery({ data, loadDeliveries }) {
   }
 
   if (delivery) {
-    console.tron.log(delivery);
+    console.tron.log(delivery.Deliveryman);
     return (
       <>
-        <td>#{delivery.id}</td>
+        <td>#{delivery.idFormatted}</td>
         <td>{delivery.Recipient.name}</td>
         <td>
           <TableAvatarContainer>
             <img
-              src="https://api.adorable.io/avatars/40/abott@adorable.png"
+              src={
+                (delivery.Deliveryman.avatar &&
+                  `http://localhost:3333/files/${delivery.Deliveryman.avatar.path}`) ||
+                'https://api.adorable.io/avatars/40/abott@adorable.png'
+              }
               alt={delivery.Deliveryman.name}
             />
             <span>{delivery.Deliveryman.name}</span>
@@ -74,8 +79,10 @@ export default function Delivery({ data, loadDeliveries }) {
         </td>
         <td>
           <ActionMenu>
-            <DeliveryModal trigger={<ViewAction />} delivery={delivery} />
-            <EditAction />
+            <DeliveryModal delivery={delivery} />
+            <EditAction
+              onClick={() => history.push(`/delivery/form/${delivery.id}`)}
+            />
             <DeleteAction onClick={() => handleDelete(delivery.id)} />
           </ActionMenu>
         </td>
@@ -83,3 +90,20 @@ export default function Delivery({ data, loadDeliveries }) {
     );
   }
 }
+
+Delivery.propTypes = {
+  loadDeliveries: PropTypes.func.isRequired,
+  data: PropTypes.shape({
+    id: PropTypes.number,
+    product: PropTypes.string,
+    Recipient: PropTypes.shape({
+      name: PropTypes.string,
+      city: PropTypes.string,
+      state: PropTypes.string,
+    }),
+    Deliveryman: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    status: PropTypes.string,
+  }).isRequired,
+};

@@ -4,8 +4,9 @@ import Route from './Routes';
 
 import SignIn from '../pages/SignIn';
 import Deliveries from '../pages/Deliveries';
-import DeliveryForm from '../pages/Deliveries/Form';
-import Deliveryman from '../pages/Deliveryman';
+import DeliveryForm from '../pages/Deliveries/DeliveryForm';
+import Deliverymen from '../pages/Deliverymen';
+import DeliverymanForm from '../pages/Deliverymen/DeliverymanForm';
 import Recipient from '../pages/Recipient';
 import DeliveryProblem from '../pages/DeliveryProblem';
 
@@ -14,9 +15,18 @@ export default function Routes() {
     <Switch>
       <Route path="/" exact component={SignIn} />
 
+      <Route path="/delivery/form/:id" component={DeliveryForm} isPrivate />
       <Route path="/delivery/form" component={DeliveryForm} isPrivate />
       <Route path="/delivery" component={Deliveries} isPrivate />
-      <Route path="/deliveryman" component={Deliveryman} isPrivate />
+
+      <Route
+        path="/deliveryman/form/:id"
+        component={DeliverymanForm}
+        isPrivate
+      />
+      <Route path="/deliveryman/form" component={DeliverymanForm} isPrivate />
+      <Route path="/deliveryman" component={Deliverymen} isPrivate />
+
       <Route path="/recipient" component={Recipient} isPrivate />
       <Route path="/problem" component={DeliveryProblem} isPrivate />
     </Switch>

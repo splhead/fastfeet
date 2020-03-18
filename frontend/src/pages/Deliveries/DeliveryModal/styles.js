@@ -3,7 +3,6 @@ import colors from '~/util/colors';
 
 export const Container = styled.div`
   padding: 25px 25px 47px;
-  width: 450px;
 
   span.title {
     font-weight: bold;

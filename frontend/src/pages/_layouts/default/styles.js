@@ -4,6 +4,6 @@ export const Wrapper = styled.div``;
 
 export const Content = styled.div`
   width: 100%;
-  max-width: 1100px;
-  margin: 32px auto;
+  max-width: 900px;
+  margin: 34px auto;
 `;

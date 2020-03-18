@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import colors from '~/util/colors';
 
 export const FormGroup = styled.div`
   width: 100%;
@@ -8,26 +9,27 @@ export const FormGroup = styled.div`
   span.error {
     margin-top: 8px;
     text-align: left;
-    color: #de3b3b;
+    color: ${colors.error};
   }
 `;
 
 export const MyInput = styled.input`
-  min-height: 38px;
-  border: 1px solid #ddd;
+  min-height: 36px;
+  border: 1px solid ${colors.borderColor};
   border-radius: 4px;
   font-size: 16px;
   margin: 8px 0 0 0;
-  padding: 0 16px;
+  padding: 0 10px;
+  color: ${colors.darkText};
 
   &::placeholder {
-    color: #999;
+    color: ${colors.placeholder};
   }
 `;
 
 export const Label = styled.label`
   font-weight: bold;
-  color: #444;
+  color: ${colors.darkText};
   text-align: left;
   margin-top: 16px;
 `;

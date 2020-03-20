@@ -25,7 +25,7 @@ export default function DeliverymanForm({ match }) {
 
         formRef.current.setData(response.data);
 
-        formRef.current.setFieldValue('avatar_id', response?.data?.avatar?.url);
+        formRef.current.setFieldValue('avatar', response?.data?.avatar?.url);
       }
     }
 
@@ -53,9 +53,9 @@ export default function DeliverymanForm({ match }) {
 
       const dataFile = new FormData();
 
-      dataFile.append('file', data.avatar_id);
+      dataFile.append('file', data.avatar);
 
-      const responseFile = data.avatar_id
+      const responseFile = data.avatar
         ? await api.post('files', dataFile)
         : null;
 
@@ -100,7 +100,7 @@ export default function DeliverymanForm({ match }) {
       </FormHeader>
       <Content>
         <Unform ref={formRef} onSubmit={handleSave}>
-          <PhotoInput name="avatar_id" />
+          <PhotoInput name="avatar" />
           <Input name="name" label="Nome" />
           <Input type="email" name="email" label="email" />
         </Unform>

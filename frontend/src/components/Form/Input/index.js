@@ -6,7 +6,7 @@ import { FormGroup, Label, MyInput } from './styles';
 
 export default function Input({ name, label, width, ...rest }) {
   const inputRef = useRef(null);
-  const { fieldName, defaultValue = '', registerField, error } = useField(name);
+  const { fieldName, registerField, defaultValue, error } = useField(name);
 
   useEffect(() => {
     registerField({

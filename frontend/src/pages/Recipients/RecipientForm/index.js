@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Form as Unform } from '@unform/web';
 import * as Yup from 'yup';
@@ -15,6 +15,7 @@ import { Container, Content, LineGroup } from './styles';
 import { toast } from 'react-toastify';
 
 export default function RecipientForm({ match }) {
+  const [recipient, setRecipient] = useState();
   const formRef = useRef(null);
   const { id } = match.params;
 
@@ -22,8 +23,7 @@ export default function RecipientForm({ match }) {
     async function loadInitialRecipient(recipientId) {
       if (recipientId) {
         const response = await api.get(`recipients/${recipientId}`);
-        console.tron.log(response);
-
+        setRecipient(response.data);
         formRef.current.setData(response.data);
       }
     }
@@ -38,12 +38,12 @@ export default function RecipientForm({ match }) {
     try {
       const schema = Yup.object().shape({
         name: Yup.string().required('O nome é necessário.'),
-        street: Yup.string().required(),
-        number: Yup.number().required(),
+        street: Yup.string().required('Informe a rua'),
+        number: Yup.string().required('O número é necessáro'),
         complement: Yup.string(),
-        city: Yup.string().required(),
-        state: Yup.string().required(),
-        zip_code: Yup.string().required(),
+        city: Yup.string().required('qual a cidade?'),
+        state: Yup.string().required('Seu estado por favor'),
+        zip_code: Yup.string().required('Informe o CEP'),
       });
 
       await schema.validate(
@@ -106,11 +106,11 @@ export default function RecipientForm({ match }) {
           <LineGroup>
             <Input name="street" label="Rua" width="500px" />
             <InputMask
-              id="number"
               name="number"
               label="Número"
-              mask="99999"
-              width="150px"
+              guide={false}
+              defaultValue={recipient?.number}
+              mask={[/\d/, /\d/, /\d/, /\d/, /\d/]}
             />
             <Input name="complement" label="Complemento" width="200px" />
           </LineGroup>
@@ -118,10 +118,10 @@ export default function RecipientForm({ match }) {
             <Input name="city" label="Cidade" />
             <Input name="state" label="Estado" />
             <InputMask
-              id="zip_code"
               name="zip_code"
               label="CEP"
-              mask="99999-999"
+              defaultValue={recipient?.zip_code}
+              mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]}
             />
           </LineGroup>
         </Unform>

@@ -29,7 +29,6 @@ export default function Recipients() {
   useEffect(() => {
     async function loadRecipient() {
       const response = await api.get('recipients');
-      console.tron.log(response);
       setRecipients(response.data);
     }
     loadRecipient();

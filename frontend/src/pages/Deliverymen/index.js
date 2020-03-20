@@ -39,7 +39,7 @@ export default function Deliverymen() {
       <HeaderContainer title="Gerenciando entregadores">
         <SearchInput
           name="search"
-          placeholder="Buscar entregadores"
+          placeholder="Buscar por entregadores"
           onChange={e => handleSearch(e.target.value)}
         />
 

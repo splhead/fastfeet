@@ -24,6 +24,8 @@ export default function DeliverymanForm({ match }) {
         const response = await api.get(`deliverymen/${deliverymanId}`);
 
         formRef.current.setData(response.data);
+
+        formRef.current.setFieldValue('avatar_id', response?.data?.avatar?.url);
       }
     }
 

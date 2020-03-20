@@ -1,20 +1,23 @@
+import InputMask from 'react-input-mask';
 import styled from 'styled-components';
 import colors from '~/util/colors';
 
-export const FormGroup = styled.div`
-  width: ${props => (props.width ? props.width : '100%')};
+export const Container = styled.div`
+  width: ${props => props.width};
   display: flex;
   flex-direction: column;
 
-  span.error {
-    margin-top: 8px;
+  label {
+    font-weight: bold;
+    color: ${colors.darkText};
     text-align: left;
-    color: ${colors.error};
+    margin-top: 16px;
   }
 `;
 
-export const MyInput = styled.input`
-  min-height: 45px;
+export const MaskInput = styled(InputMask)`
+  height: 45px;
+
   border: 1px solid ${colors.borderColor};
   border-radius: 4px;
   font-size: 16px;
@@ -25,11 +28,4 @@ export const MyInput = styled.input`
   &::placeholder {
     color: ${colors.placeholder};
   }
-`;
-
-export const Label = styled.label`
-  font-weight: bold;
-  color: ${colors.darkText};
-  text-align: left;
-  margin-top: 16px;
 `;

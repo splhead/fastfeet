@@ -14,17 +14,23 @@ export const Content = styled.label`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 2px dashed ${colors.borderColor};
+  border-radius: 50%;
   cursor: pointer;
-  > strong {
+
+  strong {
     font-size: 16px;
     color: ${colors.borderColor};
   }
-  border: 2px dashed ${colors.borderColor};
-  border-radius: 50%;
-  > img {
+
+  img {
+    height: 150px;
+    width: 150px;
     border-radius: 50%;
+    position: absolute;
   }
-  > input {
+
+  input {
     display: none;
   }
 `;

@@ -39,7 +39,7 @@ export default function PhotoInput({ name, ...rest }) {
     <Container>
       <Content htmlFor="avatar">
         {preview ? (
-          <img src={preview} alt="Avatar" width="150" />
+          <img src={preview} alt="Avatar" />
         ) : (
           <>
             <MdInsertPhoto size={40} color="#ddd" />

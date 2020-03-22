@@ -5,7 +5,7 @@ import history from '~/services/history';
 import { AddButton } from '~/components/Form/Button';
 import SearchInput from '~/components/Form/SearchInput';
 import Table from '~/components/Table';
-import Recipient from '~/components/Recipient';
+import Recipient from '~/pages/Recipients/Recipient';
 import HeaderContainer from '~/components/HeaderContainer';
 
 export default function Recipients() {

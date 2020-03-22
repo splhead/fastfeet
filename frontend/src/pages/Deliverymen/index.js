@@ -5,7 +5,7 @@ import history from '~/services/history';
 import { AddButton } from '~/components/Form/Button';
 import SearchInput from '~/components/Form/SearchInput';
 import Table from '~/components/Table';
-import Deliveryman from '~/components/Deliveryman';
+import Deliveryman from '~/pages/Deliverymen/Deliveryman';
 import HeaderContainer from '~/components/HeaderContainer';
 
 export default function Deliverymen() {

@@ -7,39 +7,44 @@ class RecipientController {
   async index(req, res) {
     const { q: filter } = req.query;
 
-    const response =
-      filter !== ''
-        ? await Recipient.findAll({
-            where: {
-              name: {
-                [Op.iLike]: `%${filter}%`,
-              },
+    const recipients = filter
+      ? await Recipient.findAll({
+          where: {
+            name: {
+              [Op.iLike]: `%${filter}%`,
             },
-            attributes: [
-              'id',
-              'name',
-              'street',
-              'number',
-              'complement',
-              'state',
-              'city',
-              'zip_code',
-            ],
-          })
-        : await Recipient.findAll({
-            attributes: [
-              'id',
-              'name',
-              'street',
-              'number',
-              'complement',
-              'state',
-              'city',
-              'zip_code',
-            ],
-          });
+          },
+          attributes: [
+            'id',
+            'name',
+            'street',
+            'number',
+            'complement',
+            'state',
+            'city',
+            'zip_code',
+          ],
+        })
+      : await Recipient.findAll({
+          attributes: [
+            'id',
+            'name',
+            'street',
+            'number',
+            'complement',
+            'state',
+            'city',
+            'zip_code',
+          ],
+        });
 
-    return res.json(response);
+    return res.json(recipients);
+  }
+
+  async show(req, res) {
+    const recipient = await Recipient.findByPk(req.params.recipientId);
+
+    return res.json(recipient);
   }
 
   async store(req, res) {

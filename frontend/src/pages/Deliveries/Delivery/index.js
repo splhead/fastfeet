@@ -9,7 +9,7 @@ import { statusColors } from '~/util/colors';
 import api from '~/services/api';
 import history from '~/services/history';
 
-import DeliveryStatus from '~/components/DeliveryStatus';
+import DeliveryStatus from '~/pages/Deliveries/DeliveryStatus';
 import ActionMenu from '~/components/ActionMenu';
 import EditAction from '~/components/ActionMenu/EditAction';
 import DeleteAction from '~/components/ActionMenu/DeleteAction';

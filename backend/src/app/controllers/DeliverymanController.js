@@ -37,6 +37,13 @@ class DeliverymanController {
       where: {
         id: req.params.deliverymanId,
       },
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['id', 'url', 'path'],
+        },
+      ],
     });
 
     if (!deliveryman) {

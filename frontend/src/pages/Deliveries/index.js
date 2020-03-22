@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { AddButton } from '~/components/Form/Button';
 import SearchInput from '~/components/Form/SearchInput';
 import HeaderContainer from '~/components/HeaderContainer';
-import Delivery from '~/components/Delivery';
+import Delivery from '~/pages/Deliveries/Delivery';
 import Table from '~/components/Table';
 
 import api from '~/services/api';

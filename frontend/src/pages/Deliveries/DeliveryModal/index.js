@@ -33,9 +33,13 @@ export default function DeliveryModal({ delivery }) {
           </div>
         )}
 
-        {delivery.signature_id && (
+        {delivery.signature && (
           <div>
             <span className="title">Assinatura do destinatário</span>
+            <img
+              src={`http://localhost:3333/files/${delivery.signature.path}`}
+              alt="Assinatura"
+            />
           </div>
         )}
       </Container>

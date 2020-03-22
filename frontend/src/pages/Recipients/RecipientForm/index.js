@@ -10,25 +10,25 @@ import FormHeader from '~/components/FormHeader';
 import { SaveButton, BackButton } from '~/components/Form/Button';
 import Input from '~/components/Form/Input';
 import InputMask from '~/components/Form/InputMask';
+//import InputMask from 'react-input-mask';
 
 import { Container, Content, LineGroup } from './styles';
 import { toast } from 'react-toastify';
 
 export default function RecipientForm({ match }) {
-  const [recipient, setRecipient] = useState();
+  const [, setNumber] = useState();
   const formRef = useRef(null);
   const { id } = match.params;
 
   useEffect(() => {
-    async function loadInitialRecipient(recipientId) {
-      if (recipientId) {
-        const response = await api.get(`recipients/${recipientId}`);
-        setRecipient(response.data);
+    async function loadInitialRecipient() {
+      if (id) {
+        const response = await api.get(`recipients/${id}`);
         formRef.current.setData(response.data);
+        setNumber(response?.data?.number);
       }
     }
-
-    loadInitialRecipient(id);
+    loadInitialRecipient();
   }, [id]);
 
   async function handleSave(data) {
@@ -76,6 +76,7 @@ export default function RecipientForm({ match }) {
         });
         toast.success('Destinatário atualizado.');
       }
+      //reset();
       history.push('/recipient');
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
@@ -106,11 +107,11 @@ export default function RecipientForm({ match }) {
           <LineGroup>
             <Input name="street" label="Rua" width="500px" />
             <InputMask
-              name="number"
               label="Número"
-              guide={false}
-              defaultValue={recipient?.number}
-              mask={[/\d/, /\d/, /\d/, /\d/, /\d/]}
+              name="number"
+              mask="99999"
+              maskChar=""
+              placeholder="99999"
             />
             <Input name="complement" label="Complemento" width="200px" />
           </LineGroup>
@@ -118,10 +119,11 @@ export default function RecipientForm({ match }) {
             <Input name="city" label="Cidade" />
             <Input name="state" label="Estado" />
             <InputMask
-              name="zip_code"
               label="CEP"
-              defaultValue={recipient?.zip_code}
-              mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]}
+              name="zip_code"
+              mask="99999-999"
+              maskChar=""
+              placeholder="99999-999"
             />
           </LineGroup>
         </Unform>

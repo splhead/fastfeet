@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import MaskedInput from 'react-text-mask';
+import ReactInputMask from 'react-input-mask';
 import colors from '~/util/colors';
 
 export const Container = styled.div`
@@ -20,7 +20,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Input = styled(MaskedInput)`
+export const Input = styled(ReactInputMask)`
   min-height: 45px;
   border: 1px solid ${colors.borderColor};
   border-radius: 4px;

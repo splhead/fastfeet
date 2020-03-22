@@ -16,7 +16,6 @@ export default function ActionMenu({ children }) {
       }
       position="bottom center"
       contentStyle={{
-        width: '135px',
         borderRadius: '4px',
         paddingLeft: '10px',
         paddingRight: '10px',

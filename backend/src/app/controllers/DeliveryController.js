@@ -13,9 +13,8 @@ class DeliveryController {
   async index(req, res) {
     const filter = req.query.q;
 
-    if (filter) {
-      return res.json(
-        await Delivery.findAll({
+    const response = filter
+      ? await Delivery.findAll({
           where: {
             product: {
               [Op.iLike]: `%${filter}%`,
@@ -43,39 +42,47 @@ class DeliveryController {
                 attributes: ['id', 'path'],
               },
             },
+            {
+              model: File,
+              as: 'signature',
+              attributes: ['id', 'path'],
+            },
           ],
           order: ['id'],
         })
-      );
-    }
-    return res.json(
-      await Delivery.findAll({
-        include: [
-          {
-            model: Recipient,
-            attributes: [
-              'name',
-              'street',
-              'number',
-              'complement',
-              'city',
-              'state',
-              'zip_code',
-            ],
-          },
-          {
-            model: Deliveryman,
-            attributes: ['name'],
-            include: {
+      : await Delivery.findAll({
+          include: [
+            {
+              model: Recipient,
+              attributes: [
+                'name',
+                'street',
+                'number',
+                'complement',
+                'city',
+                'state',
+                'zip_code',
+              ],
+            },
+            {
+              model: Deliveryman,
+              attributes: ['name'],
+              include: {
+                model: File,
+                as: 'avatar',
+                attributes: ['id', 'path'],
+              },
+            },
+            {
               model: File,
-              as: 'avatar',
+              as: 'signature',
               attributes: ['id', 'path'],
             },
-          },
-        ],
-        order: ['id'],
-      })
-    );
+          ],
+          order: ['id'],
+        });
+
+    return res.json(response);
   }
 
   async show(req, res) {

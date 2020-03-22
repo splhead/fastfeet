@@ -16,7 +16,7 @@ import { Container, Content, LineGroup } from './styles';
 import { toast } from 'react-toastify';
 
 export default function RecipientForm({ match }) {
-  const [, setNumber] = useState();
+  const [, setNumber] = useState(); // magic to inputmask
   const formRef = useRef(null);
   const { id } = match.params;
 
@@ -25,7 +25,7 @@ export default function RecipientForm({ match }) {
       if (id) {
         const response = await api.get(`recipients/${id}`);
         formRef.current.setData(response.data);
-        setNumber(response?.data?.number);
+        setNumber(response?.data?.number); // magic to inputmask
       }
     }
     loadInitialRecipient();

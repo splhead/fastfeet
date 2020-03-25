@@ -1,8 +1,41 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { signOut } from '~/store/modules/auth/actions';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import colors from '~/util/colors';
 
-// import { Container } from './styles';
+import {
+  Container,
+  Avatar,
+  Header,
+  UserContainer,
+  UserInfo,
+  WelcomeText,
+  NameText,
+} from './styles';
 
 export default function Deliveries() {
-  return <Text>Deliveries</Text>;
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => state?.user?.profile);
+
+  return (
+    <Container>
+      <Header>
+        <UserContainer>
+          <Avatar source={{ uri: profile.avatar.url }} />
+
+          <UserInfo>
+            <WelcomeText>Bem vindo de volta,</WelcomeText>
+            <NameText>{profile?.name}</NameText>
+          </UserInfo>
+        </UserContainer>
+        <Icon
+          name="exit-to-app"
+          size={18}
+          color={colors.red}
+          onPress={() => dispatch(signOut())}
+        />
+      </Header>
+    </Container>
+  );
 }

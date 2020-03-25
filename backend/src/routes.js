@@ -23,6 +23,9 @@ routes.post('/sessions', SessionController.store);
 
 // Deliveries from deliveryman
 routes.get('/deliverymen/:deliverymanId/deliveries', OrderController.index);
+
+routes.get('/deliverymen/:deliverymanId', DeliverymanController.show);
+
 // Withdraw a delivery
 routes.put(
   '/deliverymen/:deliverymanId/deliveries/:deliveryId',
@@ -48,7 +51,6 @@ routes.put('/recipients/:recipientId', RecipientController.update);
 routes.delete('/recipients/:recipientId', RecipientController.delete);
 
 routes.get('/deliverymen', DeliverymanController.index);
-routes.get('/deliverymen/:deliverymanId', DeliverymanController.show);
 routes.post('/deliverymen', DeliverymanController.store);
 routes.put('/deliverymen/:deliverymanId', DeliverymanController.update);
 routes.delete('/deliverymen/:deliverymanId', DeliverymanController.destroy);

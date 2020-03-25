@@ -28,7 +28,7 @@ export default function Home() {
           component={DeliveriesRoutes}
         />
         <Tab.Screen
-          name="Profile"
+          name="Perfil"
           options={{
             tabBarLabel: 'Meu Perfil',
             tabBarIcon: ({ color, size }) => (

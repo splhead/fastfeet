@@ -32,9 +32,9 @@ routes.put(
   OrderController.update
 );
 
-// Finsh delivery
+// handed out delivery
 routes.get(
-  '/deliverymen/:deliverymanId/deliveries/finished',
+  '/deliverymen/:deliverymanId/deliveries/handedout',
   OrderHistoryController.index
 );
 

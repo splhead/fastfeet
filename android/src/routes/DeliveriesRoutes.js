@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 //import CreateProblem from '~/pages/CreateProblem';
 import Deliveries from '~/pages/Deliveries';
 //import DeliveryConfirmPhoto from '~/pages/DeliveryConfirmPhoto';
-//import DeliveryDetails from '~/pages/DeliveryDetails';
+import DeliveryDetails from '~/pages/DeliveryDetails';
 
 const Stack = createStackNavigator();
 
@@ -21,20 +21,21 @@ export default function DeliveryRoutes() {
         headerTintColor: '#fff',
         headerTransparent: true,
       }}
-      initialRouteName="Entregas"
+      initialRouteName="Deliveries"
     >
       <Stack.Screen
         options={{ headerShown: false }}
-        name="Entregas"
+        name="Deliveries"
         component={Deliveries}
       />
-      {/* <Stack.Screen
-        name="Detalhes"
+      <Stack.Screen
+        name="DeliveryDetail"
         options={{
           title: 'Detalhes da encomenda',
         }}
         component={DeliveryDetails}
       />
+      {/*
       <Stack.Screen
         name="ConfirmPhoto"
         options={{

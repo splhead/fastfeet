@@ -1,15 +1,13 @@
 import React from 'react';
 
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import colors from '~/util/colors';
 
-import Status from './Status';
+import StatusIndicator from './StatusIndicator';
+import CardHeader from '~/components/CardHeader';
 
 import {
   Container,
-  Header,
-  Title,
+  Content,
   Footer,
   InfoGroup,
   Label,
@@ -22,24 +20,25 @@ export default function Delivery({ delivery }) {
 
   return (
     <Container>
-      <Header>
-        <Icon name="local-shipping" size={16} color={colors.primary} />
-        <Title>{`Encomenda ${delivery.idFormatted}`}</Title>
-      </Header>
+      <Content>
+        <CardHeader
+          iconName="local-shipping"
+          title={`Encomenda ${delivery.idFormatted}`}
+        />
 
-      <Status status={delivery.status} />
-
+        <StatusIndicator currentPosition={delivery.statusPosition} />
+      </Content>
       <Footer>
         <InfoGroup>
           <Label>Data</Label>
-          <Info>14/01/2020</Info>
+          <Info>{delivery.createdAtFormatted}</Info>
         </InfoGroup>
         <InfoGroup>
           <Label>Cidade</Label>
           <Info>{delivery.Recipient.city}</Info>
         </InfoGroup>
         <DetailLink
-          onPress={() => navigation.navigate('Detalhes', { delivery })}
+          onPress={() => navigation.navigate('DeliveryDetail', { delivery })}
         >
           Ver detalhes
         </DetailLink>

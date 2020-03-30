@@ -64,4 +64,6 @@ export const Status = styled.Text`
 
 export const List = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
-})``;
+})`
+  flex: 1;
+`;

@@ -1,27 +1,26 @@
 import styled from 'styled-components/native';
 import colors from '~/util/colors';
 
-export const Container = styled.View`
+export const Container = styled.View.attrs({
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 1,
+  },
+  shadowOpacity: 0.18,
+  shadowRadius: 2.0,
+
+  elevation: 1,
+})`
   width: 100%;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 28.5px;
   background: #fff;
 `;
 
-export const Header = styled.View`
-  padding-top: 13px;
-  padding-left: 14.5px;
-  flex-direction: row;
-  align-items: baseline;
-`;
-
-export const Title = styled.Text`
-  font-size: 14px;
-  font-weight: bold;
-  color: ${colors.primary};
-  margin-left: 10px;
+export const Content = styled.View`
+  margin: 14px;
 `;
 
 export const Footer = styled.View`

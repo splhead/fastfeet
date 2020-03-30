@@ -29,6 +29,36 @@ class OrderController {
     return res.json(deliveries);
   }
 
+  /* async show(req, res) {
+    const deliveryman = await Deliveryman.findByPk(req.params.deliverymanId);
+
+    if (!deliveryman) {
+      return res.status(400).json({ error: 'Deliveryman does not exists!' });
+    }
+
+    const delivery = await Delivery.findOne({
+      where: {
+        id: req.params.deliveryId,
+        deliveryman_id: deliveryman.id,
+        canceled_at: null,
+        end_date: null,
+      },
+      include: [
+        {
+          model: Recipient,
+        },
+      ],
+    });
+
+    if (!delivery) {
+      return res.status(400).json({
+        error: 'Delivery does not exists or cancelled or delivered!',
+      });
+    }
+
+    return res.json(delivery);
+  } */
+
   async update(req, res) {
     const deliveryman = await Deliveryman.findByPk(req.params.deliverymanId);
 

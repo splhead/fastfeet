@@ -23,6 +23,10 @@ routes.post('/sessions', SessionController.store);
 
 // Deliveries from deliveryman
 routes.get('/deliverymen/:deliverymanId/deliveries', OrderController.index);
+/* routes.get(
+  '/deliverymen/:deliverymanId/deliveries/:deliveryId',
+  OrderController.show
+); */
 
 routes.get('/deliverymen/:deliverymanId', DeliverymanController.show);
 
@@ -32,9 +36,9 @@ routes.put(
   OrderController.update
 );
 
-// handed out delivery
+// delivered deliveries
 routes.get(
-  '/deliverymen/:deliverymanId/deliveries/handedout',
+  '/deliverymen/:deliverymanId/deliveries/delivered',
   OrderHistoryController.index
 );
 

@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { format, parseISO } from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
+import React, { useState, useMemo, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOut } from '~/store/modules/auth/actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from '~/util/colors';
+
+import formatDate from '~/util/date';
 
 import Delivery from './Delivery';
 
@@ -31,11 +32,14 @@ export default function Deliveries() {
   const profile = useSelector((state) => state?.user?.profile);
   const { id } = useSelector((state) => state.auth);
 
-  const formatDate = (date) => {
-    if (date) {
-      return format(parseISO(date), "dd'/'MM'/'yyyy", {
-        locale: ptBR,
-      });
+  const statusStepPosition = (status) => {
+    switch (status) {
+      case 'PENDENTE':
+        return 0;
+      case 'RETIRADA':
+        return 1;
+      case 'ENTREGUE':
+        return 2;
     }
   };
 
@@ -45,25 +49,25 @@ export default function Deliveries() {
       idFormatted: delivery.id.toString().padStart(2, '0'),
       startDateFormatted: formatDate(delivery.start_date),
       endDateFormatted: formatDate(delivery.end_date),
+      createdAtFormatted: formatDate(delivery.createdAt),
+      statusPosition: statusStepPosition(delivery.status),
     }));
   }, [deliveries]);
 
-  useEffect(() => {
-    async function loadDeliveries() {
-      if (!id) return;
+  useFocusEffect(
+    useCallback(() => {
+      async function loadDeliveries() {
+        if (!id) return;
+        const response =
+          statusType === 'PENDENTES'
+            ? await api.get(`/deliverymen/${id}/deliveries`)
+            : await api.get(`/deliverymen/${id}/deliveries/delivered`);
 
-      const response =
-        statusType === 'PENDENTES'
-          ? await api.get(`/deliverymen/${id}/deliveries`)
-          : await api.get(`/deliverymen/${id}/deliveries/handedout`);
-
-      console.tron.log(response.data);
-
-      setDeliveries(response.data);
-    }
-
-    loadDeliveries();
-  }, [id, statusType]);
+        setDeliveries(response.data);
+      }
+      loadDeliveries();
+    }, [statusType])
+  );
 
   return (
     <Container>

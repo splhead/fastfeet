@@ -19,8 +19,9 @@ export default function Home() {
         }}
       >
         <Tab.Screen
-          name="Entregas"
+          name="Deliveries"
           options={{
+            tabBarLabel: 'Entregas',
             tabBarIcon: ({ color, size }) => (
               <Icon name="reorder" size={size} color={color} />
             ),
@@ -28,7 +29,7 @@ export default function Home() {
           component={DeliveriesRoutes}
         />
         <Tab.Screen
-          name="Perfil"
+          name="Profile"
           options={{
             tabBarLabel: 'Meu Perfil',
             tabBarIcon: ({ color, size }) => (

@@ -101,16 +101,25 @@ export default function DeliveryDetails() {
         </Card>
 
         <ActionContainer>
-          <Action style={{ borderBottomLeftRadius: 4, borderTopLeftRadius: 4 }}>
+          <Action
+            style={{ borderBottomLeftRadius: 4, borderTopLeftRadius: 4 }}
+            onPress={() =>
+              navigation.navigate('InformProblem', { deliveryId: delivery.id })
+            }
+          >
             <Icon name="close-circle-outline" size={20} color={colors.red} />
             <ActionText>Informar</ActionText>
             <ActionText>Problema</ActionText>
           </Action>
 
-          <Action>
+          <Action
+            onPress={() =>
+              navigation.navigate('Problems', { deliveryId: delivery.id })
+            }
+          >
             <Icon name="alert-circle-outline" size={20} color={colors.orange} />
             <ActionText>Visualizar</ActionText>
-            <ActionText>Problema</ActionText>
+            <ActionText>Problemas</ActionText>
           </Action>
 
           {delivery.status === 'PENDENTE' ? (
@@ -120,7 +129,7 @@ export default function DeliveryDetails() {
             >
               <Icon name="truck-delivery" size={20} color={colors.primary} />
               <ActionText>Retirar</ActionText>
-              <ActionText>Entrega</ActionText>
+              <ActionText>Encomenda</ActionText>
             </Action>
           ) : (
             <Action

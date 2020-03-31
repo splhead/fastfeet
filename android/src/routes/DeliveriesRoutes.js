@@ -2,8 +2,9 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-//import CreateProblem from '~/pages/CreateProblem';
 import Deliveries from '~/pages/Deliveries';
+import InformProblem from '~/pages/InformProblem';
+import Problems from '~/pages/Problems';
 //import DeliveryConfirmPhoto from '~/pages/DeliveryConfirmPhoto';
 import DeliveryDetails from '~/pages/DeliveryDetails';
 
@@ -42,14 +43,21 @@ export default function DeliveryRoutes() {
           title: 'Confirmar entrega',
         }}
         component={DeliveryConfirmPhoto}
-      />
+      /> */}
       <Stack.Screen
-        name="CreateProblem"
+        name="InformProblem"
         options={{
           title: 'Informar problema',
         }}
-        component={CreateProblem}
-      /> */}
+        component={InformProblem}
+      />
+      <Stack.Screen
+        name="Problems"
+        options={{
+          title: 'Visualizar problemas',
+        }}
+        component={Problems}
+      />
     </Stack.Navigator>
   );
 }

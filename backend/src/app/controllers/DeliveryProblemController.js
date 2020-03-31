@@ -19,7 +19,7 @@ class DeliveryProblemController {
   }
 
   async show(req, res) {
-    const deliveryProblems = await DeliveryProblem.findOne({
+    const deliveryProblems = await DeliveryProblem.findAll({
       where: {
         delivery_id: req.params.deliveryId,
       },

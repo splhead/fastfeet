@@ -9,6 +9,7 @@ import RecipientController from './app/controllers/RecipientController';
 import DeliverymanController from './app/controllers/DeliverymanController';
 import DeliveryController from './app/controllers/DeliveryController';
 import DeliveryProblemController from './app/controllers/DeliveryProblemController';
+import ProblemController from './app/controllers/ProblemController';
 import SessionController from './app/controllers/SessionController';
 import OrderController from './app/controllers/OrderController';
 import OrderHistoryController from './app/controllers/OrderHistoryController';
@@ -43,6 +44,8 @@ routes.get(
 );
 
 routes.post('/delivery/:deliveryId/problems', DeliveryProblemController.store);
+
+routes.get('/deliveries/:deliveryId/problems-list', ProblemController.index);
 
 routes.use(authMiddleware);
 

@@ -64,7 +64,7 @@ export const Action = styled(TouchableOpacity)`
   flex: 1;
   background: #f8f9fd;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 14px 24px;
+  padding: 14px 20px;
   align-items: center;
   margin-bottom: 10px;
 `;

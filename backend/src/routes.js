@@ -12,6 +12,7 @@ import DeliveryProblemController from './app/controllers/DeliveryProblemControll
 import ProblemController from './app/controllers/ProblemController';
 import SessionController from './app/controllers/SessionController';
 import OrderController from './app/controllers/OrderController';
+import FinishDeliveryController from './app/controllers/FinishDeliveryController';
 import OrderHistoryController from './app/controllers/OrderHistoryController';
 
 const routes = new Router();
@@ -24,10 +25,6 @@ routes.post('/sessions', SessionController.store);
 
 // Deliveries from deliveryman
 routes.get('/deliverymen/:deliverymanId/deliveries', OrderController.index);
-/* routes.get(
-  '/deliverymen/:deliverymanId/deliveries/:deliveryId',
-  OrderController.show
-); */
 
 routes.get('/deliverymen/:deliverymanId', DeliverymanController.show);
 
@@ -35,6 +32,12 @@ routes.get('/deliverymen/:deliverymanId', DeliverymanController.show);
 routes.put(
   '/deliverymen/:deliverymanId/deliveries/:deliveryId',
   OrderController.update
+);
+
+// Finish a delivery
+routes.put(
+  '/deliverymen/:deliverymanId/deliveries/:deliveryId/finish',
+  FinishDeliveryController.update
 );
 
 // delivered deliveries

@@ -8,9 +8,20 @@ export const Container = styled.div`
     font-weight: bold;
     color: ${colors.darkText};
     margin-bottom: 4px;
+    display: block;
   }
 
   div + div {
     margin-top: 21px;
+  }
+
+  div.signature-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      height: 160px;
+    }
   }
 `;

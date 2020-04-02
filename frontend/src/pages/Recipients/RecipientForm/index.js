@@ -9,8 +9,7 @@ import history from '~/services/history';
 import FormHeader from '~/components/FormHeader';
 import { SaveButton, BackButton } from '~/components/Form/Button';
 import Input from '~/components/Form/Input';
-import InputMask from '~/components/Form/InputMask';
-//import InputMask from 'react-input-mask';
+import MaskInput from '~/components/Form/MaskInput';
 
 import { Container, Content, LineGroup } from './styles';
 import { toast } from 'react-toastify';
@@ -106,11 +105,11 @@ export default function RecipientForm({ match }) {
           <Input name="name" label="Nome" />
           <LineGroup>
             <Input name="street" label="Rua" width="500px" />
-            <InputMask
+            <MaskInput
               label="Número"
+              id="number"
               name="number"
               mask="99999"
-              maskChar=""
               placeholder="99999"
             />
             <Input name="complement" label="Complemento" width="200px" />
@@ -118,11 +117,11 @@ export default function RecipientForm({ match }) {
           <LineGroup>
             <Input name="city" label="Cidade" />
             <Input name="state" label="Estado" />
-            <InputMask
+            <MaskInput
               label="CEP"
               name="zip_code"
+              id="zip_code"
               mask="99999-999"
-              maskChar=""
               placeholder="99999-999"
             />
           </LineGroup>

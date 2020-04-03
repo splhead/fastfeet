@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getHours } from 'date-fns';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { StatusBar, Alert } from 'react-native';
@@ -58,6 +59,9 @@ export default function DeliveryDetails() {
       { cancelable: false }
     );
   }
+
+  const isNotbusinessHour =
+    getHours(new Date()) > 18 || getHours(new Date()) < 8;
 
   return (
     <Container>
@@ -127,6 +131,7 @@ export default function DeliveryDetails() {
             <Action
               style={{ borderBottomRightRadius: 4, borderTopRightRadius: 4 }}
               onPress={handleWithdrawDelivery}
+              disabled={isNotbusinessHour}
             >
               <Icon name="truck-delivery" size={20} color={colors.primary} />
               <ActionText>Retirar</ActionText>

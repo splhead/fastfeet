@@ -18,7 +18,7 @@ export default function DeliveryProblemModal({ problem }) {
 
 DeliveryProblemModal.propTypes = {
   problem: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     description: PropTypes.string,
   }).isRequired,
 };

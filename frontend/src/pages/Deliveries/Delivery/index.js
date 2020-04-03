@@ -10,10 +10,11 @@ import api from '~/services/api';
 import history from '~/services/history';
 
 import DeliveryStatus from '~/pages/Deliveries/DeliveryStatus';
+import DeliveryModal from '~/pages/Deliveries/DeliveryModal';
 import ActionMenu from '~/components/ActionMenu';
 import EditAction from '~/components/ActionMenu/EditAction';
 import DeleteAction from '~/components/ActionMenu/DeleteAction';
-import DeliveryModal from '~/pages/Deliveries/DeliveryModal';
+import NamePicture from '~/components/NamePicture';
 
 export default function Delivery({ data, loadDeliveries }) {
   const [delivery, setDelivery] = useState(data);
@@ -56,14 +57,14 @@ export default function Delivery({ data, loadDeliveries }) {
         <td>{delivery.Recipient.name}</td>
         <td>
           <TableAvatarContainer>
-            <img
-              src={
-                (delivery.Deliveryman.avatar &&
-                  `http://localhost:3333/files/${delivery.Deliveryman.avatar.path}`) ||
-                'https://api.adorable.io/avatars/40/abott@adorable.png'
-              }
-              alt={delivery.Deliveryman.name}
-            />
+            {delivery?.Deliveryman?.avatar ? (
+              <img
+                src={`http://localhost:3333/files/${delivery.Deliveryman.avatar.path}`}
+                alt={delivery.Deliveryman.name}
+              />
+            ) : (
+              <NamePicture name={delivery.Deliveryman.name} />
+            )}
             <span>{delivery.Deliveryman.name}</span>
           </TableAvatarContainer>
         </td>

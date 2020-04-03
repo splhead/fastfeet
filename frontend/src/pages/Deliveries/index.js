@@ -5,12 +5,16 @@ import SearchInput from '~/components/Form/SearchInput';
 import HeaderContainer from '~/components/HeaderContainer';
 import Delivery from '~/pages/Deliveries/Delivery';
 import Table from '~/components/Table';
+import Pagination from '~/components/Pagination';
 
 import api from '~/services/api';
 import history from '~/services/history';
 
+const ITENS_PER_PAGE = 3;
+
 export default function Deliveries() {
   const [deliveries, setDeliveries] = useState([]);
+  const [totalItens, setTotalItens] = useState(0);
 
   async function handleSearch(product) {
     const response = await api.get('deliveries', {
@@ -22,18 +26,17 @@ export default function Deliveries() {
     setDeliveries(response.data);
   }
 
-  const loadDeliveries = useCallback(async () => {
-    const response = await api.get('deliveries');
-    setDeliveries(response.data);
+  const loadDeliveries = useCallback(async page => {
+    const response = await api.get(
+      `deliveries?page=${page}&itens_per_page=${ITENS_PER_PAGE}`
+    );
+    setTotalItens(response.data.count);
+    setDeliveries(response.data.rows);
   }, []);
 
   useEffect(() => {
-    async function loadDeliveries() {
-      const response = await api.get('deliveries');
-      setDeliveries(response.data);
-    }
-    loadDeliveries();
-  }, []);
+    loadDeliveries(1);
+  }, [loadDeliveries]);
 
   return (
     <>
@@ -67,6 +70,13 @@ export default function Deliveries() {
             ))}
         </tbody>
       </Table>
+      {totalItens > ITENS_PER_PAGE && (
+        <Pagination
+          loadItens={loadDeliveries}
+          totalItens={totalItens}
+          itensPerPage={ITENS_PER_PAGE}
+        />
+      )}
     </>
   );
 }

@@ -10,10 +10,13 @@ import Recipient from '../models/Recipient';
 
 class DeliveryProblemController {
   async index(req, res) {
-    const deliveriesProblems = await DeliveryProblem.findAll({
+    const { page = 1, itens_per_page = 2 } = req.query;
+    const deliveriesProblems = await DeliveryProblem.findAndCountAll({
       include: {
         model: Delivery,
       },
+      limit: itens_per_page,
+      offset: (page - 1) * itens_per_page,
     });
     return res.json(deliveriesProblems);
   }

@@ -6,22 +6,26 @@ import Deliveryman from '../models/Deliveryman';
 
 class DeliverymanController {
   async index(req, res) {
-    const filter = req.query.q;
+    const { q: filter, page = 1, itens_per_page = 2 } = req.query;
 
     const deliverymen = filter
-      ? await Deliveryman.findAll({
+      ? await Deliveryman.findAndCountAll({
           where: {
             name: {
               [Op.iLike]: `%${filter}%`,
             },
           },
+          limit: itens_per_page,
+          offset: (page - 1) * itens_per_page,
           include: {
             model: File,
             as: 'avatar',
             attributes: ['id', 'path', 'url'],
           },
         })
-      : await Deliveryman.findAll({
+      : await Deliveryman.findAndCountAll({
+          limit: itens_per_page,
+          offset: (page - 1) * itens_per_page,
           include: {
             model: File,
             as: 'avatar',

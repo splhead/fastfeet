@@ -7,9 +7,13 @@ import SearchInput from '~/components/Form/SearchInput';
 import Table from '~/components/Table';
 import Deliveryman from '~/pages/Deliverymen/Deliveryman';
 import HeaderContainer from '~/components/HeaderContainer';
+import Pagination from '~/components/Pagination';
+
+const ITENS_PER_PAGE = 3;
 
 export default function Deliverymen() {
   const [deliverymen, setDeliverymen] = useState([]);
+  const [totalItens, setTotalItens] = useState(0);
 
   async function handleSearch(product) {
     const response = await api.get('deliverymen', {
@@ -21,18 +25,17 @@ export default function Deliverymen() {
     setDeliverymen(response.data);
   }
 
-  const loadDeliverymen = useCallback(async () => {
-    const response = await api.get('deliverymen');
-    setDeliverymen(response.data);
+  const loadDeliverymen = useCallback(async page => {
+    const response = await api.get(
+      `deliverymen?page=${page}&itens_per_page=${ITENS_PER_PAGE}`
+    );
+    setTotalItens(response.data.count);
+    setDeliverymen(response.data.rows);
   }, []);
 
   useEffect(() => {
-    async function loadDeliverymen() {
-      const response = await api.get('deliverymen');
-      setDeliverymen(response.data);
-    }
-    loadDeliverymen();
-  }, []);
+    loadDeliverymen(1);
+  }, [loadDeliverymen]);
 
   return (
     <>
@@ -67,6 +70,13 @@ export default function Deliverymen() {
             ))}
         </tbody>
       </Table>
+      {totalItens > ITENS_PER_PAGE && (
+        <Pagination
+          loadItens={loadDeliverymen}
+          totalItens={totalItens}
+          itensPerPage={ITENS_PER_PAGE}
+        />
+      )}
     </>
   );
 }

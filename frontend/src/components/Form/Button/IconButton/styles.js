@@ -18,8 +18,4 @@ export const MyButton = styled.button`
   &:hover {
     background: ${props => darken(0.1, props.background)};
   }
-
-  svg {
-    margin-right: 6px;
-  }
 `;

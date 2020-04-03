@@ -5,10 +5,12 @@ import Recipient from '../models/Recipient';
 
 class RecipientController {
   async index(req, res) {
-    const { q: filter } = req.query;
+    const { q: filter, page = 1, itens_per_page = 2 } = req.query;
 
     const recipients = filter
-      ? await Recipient.findAll({
+      ? await Recipient.findAndCountAll({
+          limit: itens_per_page,
+          offset: (page - 1) * itens_per_page,
           where: {
             name: {
               [Op.iLike]: `%${filter}%`,
@@ -25,7 +27,9 @@ class RecipientController {
             'zip_code',
           ],
         })
-      : await Recipient.findAll({
+      : await Recipient.findAndCountAll({
+          limit: itens_per_page,
+          offset: (page - 1) * itens_per_page,
           attributes: [
             'id',
             'name',

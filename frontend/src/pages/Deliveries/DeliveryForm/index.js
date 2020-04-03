@@ -19,26 +19,26 @@ export default function DeliveryForm({ match }) {
   const { id } = match.params;
 
   async function loadRecipients(inputValue) {
-    const response = await api.get('recipients', {
+    const response = await api.get(`recipients?itens_per_page=10000`, {
       params: {
         q: inputValue,
       },
     });
 
-    return response.data.map(recipient => ({
+    return response.data.rows.map(recipient => ({
       value: recipient.id,
       label: recipient.name,
     }));
   }
 
   async function loadDeliveryman(inputValue) {
-    const response = await api.get('deliverymen', {
+    const response = await api.get(`deliverymen?itens_per_page=10000`, {
       params: {
         q: inputValue,
       },
     });
 
-    return response.data.map(deliveryman => ({
+    return response.data.rows.map(deliveryman => ({
       value: deliveryman.id,
       label: deliveryman.name,
     }));

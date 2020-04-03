@@ -50,7 +50,6 @@ export default function Delivery({ data, loadDeliveries }) {
   }
 
   if (delivery) {
-    console.tron.log(delivery.Deliveryman);
     return (
       <>
         <td>#{delivery.idFormatted}</td>

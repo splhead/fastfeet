@@ -11,15 +11,17 @@ import Queue from '../../lib/Queue';
 
 class DeliveryController {
   async index(req, res) {
-    const filter = req.query.q;
+    const { q: filter, page = 1, itens_per_page = 2 } = req.query;
 
     const response = filter
-      ? await Delivery.findAll({
+      ? await Delivery.findAndCountAll({
           where: {
             product: {
               [Op.iLike]: `%${filter}%`,
             },
           },
+          limit: itens_per_page,
+          offset: (page - 1) * itens_per_page,
           include: [
             {
               model: Recipient,
@@ -50,7 +52,9 @@ class DeliveryController {
           ],
           order: ['id'],
         })
-      : await Delivery.findAll({
+      : await Delivery.findAndCountAll({
+          limit: itens_per_page,
+          offset: (page - 1) * itens_per_page,
           include: [
             {
               model: Recipient,

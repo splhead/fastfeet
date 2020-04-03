@@ -7,7 +7,7 @@ import { MyButton } from './styles';
 export default function Button({ Icon, action, children, ...rest }) {
   return (
     <MyButton onClick={action} {...rest}>
-      {Icon && <Icon size={24} color="#fff" />}
+      {Icon && <Icon size={24} color="#fff" style={{ marginRight: 6 }} />}
       {children}
     </MyButton>
   );

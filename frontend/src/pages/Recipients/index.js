@@ -7,9 +7,13 @@ import SearchInput from '~/components/Form/SearchInput';
 import Table from '~/components/Table';
 import Recipient from '~/pages/Recipients/Recipient';
 import HeaderContainer from '~/components/HeaderContainer';
+import Pagination from '~/components/Pagination';
+
+const ITENS_PER_PAGE = 3;
 
 export default function Recipients() {
   const [recipients, setRecipients] = useState([]);
+  const [totalItens, setTotalItens] = useState(0);
 
   async function handleSearch(name) {
     const response = await api.get('recipients', {
@@ -21,18 +25,17 @@ export default function Recipients() {
     setRecipients(response.data);
   }
 
-  const loadRecipient = useCallback(async () => {
-    const response = await api.get('recipients');
-    setRecipients(response.data);
+  const loadRecipient = useCallback(async page => {
+    const response = await api.get(
+      `recipients?page=${page}&itens_per_page=${ITENS_PER_PAGE}`
+    );
+    setTotalItens(response.data.count);
+    setRecipients(response.data.rows);
   }, []);
 
   useEffect(() => {
-    async function loadRecipient() {
-      const response = await api.get('recipients');
-      setRecipients(response.data);
-    }
-    loadRecipient();
-  }, []);
+    loadRecipient(1);
+  }, [loadRecipient]);
 
   return (
     <>
@@ -66,6 +69,13 @@ export default function Recipients() {
             ))}
         </tbody>
       </Table>
+      {totalItens > ITENS_PER_PAGE && (
+        <Pagination
+          loadItens={loadRecipient}
+          totalItens={totalItens}
+          itensPerPage={ITENS_PER_PAGE}
+        />
+      )}
     </>
   );
 }

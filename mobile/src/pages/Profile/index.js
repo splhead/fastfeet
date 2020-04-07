@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { signOut } from '~/store/modules/auth/actions';
+import NamePicture from '~/components/NamePicture';
 
 import { Container, Image, Label, TextField, LogoutButton } from './styles';
 
@@ -14,7 +15,11 @@ export default function Profile() {
 
   return (
     <Container>
-      <Image source={{ uri: profile?.avatar.url }} />
+      {profile?.avatar ? (
+        <Image source={{ uri: profile?.avatar.url }} />
+      ) : (
+        <NamePicture name={profile?.name} height="136" />
+      )}
 
       <Label>Nome completo</Label>
       <TextField>{profile?.name}</TextField>

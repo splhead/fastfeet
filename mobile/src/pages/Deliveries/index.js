@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { signOut } from '~/store/modules/auth/actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from '~/util/colors';
+import NamePicture from '~/components/NamePicture';
 
 import formatDate from '~/util/date';
 
@@ -30,7 +31,7 @@ export default function Deliveries() {
   const [statusType, setStatusType] = useState('PENDENTES');
   const [deliveries, setDeliveries] = useState([]);
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state?.user?.profile);
+  const profile = useSelector((state) => state.user.profile);
   const { id } = useSelector((state) => state.auth);
 
   const statusStepPosition = (status) => {
@@ -43,6 +44,10 @@ export default function Deliveries() {
         return 2;
     }
   };
+
+  const nameTruncated = useMemo(() => {
+    return `${profile?.name?.slice(0, 16)}...`;
+  }, [profile]);
 
   const deliveriesFormatted = useMemo(() => {
     return deliveries.map((delivery) => ({
@@ -74,11 +79,14 @@ export default function Deliveries() {
     <Container>
       <ProfileHeader>
         <UserContainer>
-          <Avatar source={{ uri: profile?.avatar.url }} />
-
+          {profile?.avatar ? (
+            <Avatar source={{ uri: profile?.avatar?.url }} />
+          ) : (
+            <NamePicture name={profile?.name} />
+          )}
           <UserInfo>
             <WelcomeText>Bem vindo de volta,</WelcomeText>
-            <TitleText>{profile?.name}</TitleText>
+            <TitleText>{nameTruncated}</TitleText>
           </UserInfo>
         </UserContainer>
         <Icon

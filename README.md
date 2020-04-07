@@ -61,6 +61,8 @@ $ docker run --name some-redis -d redis
 $ docker start "CONTAINER DOCKER ID"
 ```
 
+You need copy file .env.example to .env in backend folder and change values
+
 ### Now in your terminal, run:
 
 ```
@@ -77,15 +79,39 @@ $ yarn sequelize db:seed:all
 $ yarn dev
 ```
 
+### To start queue to Mail send
+
+```
+$ cd backend
+
+$ yarn queue
+```
+
 #### To debugin, run:
 
 ```
 yarn dev:debug
 ```
 
+# Frontend
+
+The backend needed.
+
+If you run in a diferent server remember change in frontend/src/services/api.js
+
+### Now in your terminal, run:
+
+```
+$ cd frontend
+
+$ yarn
+
+$ yarn start
+```
+
 # Mobile
 
-ps: Only android version was tested in mobile.
+ps: Only android version was tested in mobile. The backend needed.
 
 ### Now in your terminal, run:
 

@@ -61,7 +61,7 @@ $ docker run --name some-redis -d redis
 $ docker start "CONTAINER DOCKER ID"
 ```
 
-You need copy file .env.example to .env in backend folder and change values
+You need copy file **.env.example** to **.env** in _backend_ folder and change values
 
 ### Now in your terminal, run:
 
@@ -95,9 +95,11 @@ yarn dev:debug
 
 # Frontend
 
-The backend needed.
+_The backend needed._
 
-If you run in a diferent server remember change in frontend/src/services/api.js
+The default user is **admin@fastfeet.com** and password **123456**
+
+Copy file **.env.example** to **.env** in _frontend_ folder and change values
 
 ### Now in your terminal, run:
 
@@ -109,9 +111,11 @@ $ yarn
 $ yarn start
 ```
 
+![Frontend](/frontend/frontend.gif)
+
 # Mobile
 
-ps: Only android version was tested in mobile. The backend needed.
+_ps: Only android version was tested in mobile. The backend needed._
 
 ### Now in your terminal, run:
 

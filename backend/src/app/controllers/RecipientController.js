@@ -100,7 +100,7 @@ class RecipientController {
     if (!recipient) {
       return res.status(400).json({ error: 'Recipient does not exists.' });
     }
-    const { name } = req.body;
+    const { name, street, number } = req.body;
 
     if (
       name &&

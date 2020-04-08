@@ -55,17 +55,19 @@ export default function Delivery({ data, loadDeliveries }) {
         <td>#{delivery.idFormatted}</td>
         <td>{delivery.Recipient.name}</td>
         <td>
-          <TableAvatarContainer>
-            {delivery?.Deliveryman?.avatar ? (
-              <img
-                src={`http://localhost:3333/files/${delivery.Deliveryman.avatar.path}`}
-                alt={delivery.Deliveryman.name}
-              />
-            ) : (
-              <NamePicture name={delivery.Deliveryman.name} />
-            )}
-            <span>{delivery.Deliveryman.name}</span>
-          </TableAvatarContainer>
+          {delivery.Deliveryman && (
+            <TableAvatarContainer>
+              {delivery?.Deliveryman?.avatar ? (
+                <img
+                  src={`http://localhost:3333/files/${delivery.Deliveryman.avatar.path}`}
+                  alt={delivery.Deliveryman.name}
+                />
+              ) : (
+                <NamePicture name={delivery.Deliveryman.name} />
+              )}
+              <span>{delivery.Deliveryman.name}</span>
+            </TableAvatarContainer>
+          )}
         </td>
         <td>{delivery.Recipient.city}</td>
         <td>{delivery.Recipient.state}</td>

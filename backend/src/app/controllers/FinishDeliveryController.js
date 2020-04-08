@@ -3,7 +3,6 @@ import Delivery from '../models/Delivery';
 class FinishDeliveryController {
   async update(req, res) {
     const { deliverymanId, deliveryId } = req.params;
-    console.log(deliverymanId, deliveryId);
 
     const delivery = await Delivery.findOne({
       where: {

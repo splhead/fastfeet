@@ -102,9 +102,9 @@ export default function RecipientForm({ match }) {
       </FormHeader>
       <Content>
         <Unform ref={formRef} onSubmit={handleSave}>
-          <Input name="name" label="Nome" />
+          <Input id="name" name="name" label="Nome" />
           <LineGroup>
-            <Input name="street" label="Rua" width="500px" />
+            <Input id="street" name="street" label="Rua" />
             <MaskInput
               label="Número"
               id="number"
@@ -112,11 +112,16 @@ export default function RecipientForm({ match }) {
               mask="99999"
               placeholder="99999"
             />
-            <Input name="complement" label="Complemento" width="200px" />
+            <Input
+              id="complement"
+              name="complement"
+              label="Complemento"
+              width="300px"
+            />
           </LineGroup>
           <LineGroup>
-            <Input name="city" label="Cidade" />
-            <Input name="state" label="Estado" />
+            <Input id="city" name="city" label="Cidade" />
+            <Input id="state" name="state" label="Estado" />
             <MaskInput
               label="CEP"
               name="zip_code"

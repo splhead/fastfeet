@@ -16,6 +16,7 @@ export default function SignIn() {
   const formRef = useRef(null);
 
   async function handleSubmit(data, { reset }) {
+    formRef.current.setErrors({});
     try {
       const schema = Yup.object().shape({
         email: Yup.string()

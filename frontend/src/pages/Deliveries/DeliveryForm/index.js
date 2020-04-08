@@ -55,10 +55,13 @@ export default function DeliveryForm({ match }) {
           value: response.data.Recipient.id,
           label: response.data.Recipient.name,
         });
-        formRef.current.setFieldValue('deliveryman_id', {
-          value: response.data.Deliveryman.id,
-          label: response.data.Deliveryman.name,
-        });
+
+        if (response.data.Deliveryman) {
+          formRef.current.setFieldValue('deliveryman_id', {
+            value: response.data.Deliveryman.id,
+            label: response.data.Deliveryman.name,
+          });
+        }
       }
     }
 

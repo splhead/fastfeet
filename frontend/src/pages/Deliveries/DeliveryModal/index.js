@@ -1,5 +1,6 @@
 import React from 'react';
-//import PropTypes from 'prop-types';
+import 'dotenv';
+import PropTypes from 'prop-types';
 import { Container } from './styles';
 import Modal from '~/components/Modal';
 
@@ -10,12 +11,17 @@ export default function DeliveryModal({ delivery }) {
         <div>
           <span className="title">Informações da encomenda</span>
 
-          <span>
+          <span className="address">
             {delivery.Recipient.street}, {delivery.Recipient.number}
-            {delivery.Recipient.complement}
-            {delivery.Recipient.city} - {delivery.Recipient.state}
-            {delivery.Recipient.zip_code}
           </span>
+
+          {delivery.Recipient.complement && (
+            <span className="address">{delivery.Recipient.complement}</span>
+          )}
+          <span className="address">
+            {delivery.Recipient.city} - {delivery.Recipient.state}
+          </span>
+          <span className="address">{delivery.Recipient.zip_code}</span>
         </div>
 
         {delivery.start_date && (
@@ -24,6 +30,7 @@ export default function DeliveryModal({ delivery }) {
 
             <span className="bold">Retirada:</span>
             <span>{delivery.start_date}</span>
+            <br />
 
             <span className="bold">Entrega:</span>
             <span>{delivery.end_date}</span>
@@ -35,7 +42,7 @@ export default function DeliveryModal({ delivery }) {
             <span className="title">Assinatura do destinatário</span>
             <div className="signature-container">
               <img
-                src={`http://localhost:3333/files/${delivery.signature.path}`}
+                src={`${process.env.REACT_APP_API_URL}/files/${delivery.signature.path}`}
                 alt="Assinatura"
               />
             </div>
@@ -45,3 +52,21 @@ export default function DeliveryModal({ delivery }) {
     </Modal>
   );
 }
+
+DeliveryModal.propTypes = {
+  delivery: PropTypes.shape({
+    start_date: PropTypes.string,
+    end_date: PropTypes.string,
+    signature: PropTypes.shape({
+      path: PropTypes.string.isRequired,
+    }),
+    Recipient: PropTypes.shape({
+      street: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+      complement: PropTypes.string,
+      city: PropTypes.string.isRequired,
+      state: PropTypes.string.isRequired,
+      zip_code: PropTypes.string.isRequired,
+    }),
+  }),
+};

@@ -8,24 +8,26 @@ import Table from '~/components/Table';
 import Recipient from '~/pages/Recipients/Recipient';
 import HeaderContainer from '~/components/HeaderContainer';
 import Pagination from '~/components/Pagination';
+import EmptyData from '~/components/EmptyData';
 
-const ITENS_PER_PAGE = 3;
+const ITENS_PER_PAGE = process.env.REACT_APP_ITENS_TO_SHOW;
 
 export default function Recipients() {
   const [recipients, setRecipients] = useState([]);
   const [totalItens, setTotalItens] = useState(0);
 
   async function handleSearch(name) {
-    const response = await api.get('recipients', {
+    const response = await api.get(`recipients?itens_per_page=100`, {
       params: {
         q: name,
       },
     });
-
-    setRecipients(response.data);
+    setTotalItens(response.data.count);
+    setRecipients(response.data.rows);
   }
 
-  const loadRecipient = useCallback(async page => {
+  const loadRecipients = useCallback(async pag => {
+    const page = pag ? pag : 1;
     const response = await api.get(
       `recipients?page=${page}&itens_per_page=${ITENS_PER_PAGE}`
     );
@@ -34,8 +36,8 @@ export default function Recipients() {
   }, []);
 
   useEffect(() => {
-    loadRecipient(1);
-  }, [loadRecipient]);
+    loadRecipients();
+  }, [loadRecipients]);
 
   return (
     <>
@@ -48,30 +50,34 @@ export default function Recipients() {
 
         <AddButton action={() => history.push('recipient/form')} />
       </HeaderContainer>
-      <Table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Endereço</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {recipients &&
-            recipients.map(recipient => (
-              <tr key={recipient.id}>
-                <Recipient
-                  recipient={recipient}
-                  loadRecipient={loadRecipient}
-                />
-              </tr>
-            ))}
-        </tbody>
-      </Table>
+      {recipients.length > 0 ? (
+        <Table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Endereço</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {recipients &&
+              recipients.map(recipient => (
+                <tr key={recipient.id}>
+                  <Recipient
+                    recipient={recipient}
+                    loadRecipients={loadRecipients}
+                  />
+                </tr>
+              ))}
+          </tbody>
+        </Table>
+      ) : (
+        <EmptyData />
+      )}
       {totalItens > ITENS_PER_PAGE && (
         <Pagination
-          loadItens={loadRecipient}
+          loadItens={loadRecipients}
           totalItens={totalItens}
           itensPerPage={ITENS_PER_PAGE}
         />
